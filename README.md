@@ -285,8 +285,8 @@ MIT License
 
 ## 📞 サポート
 
-- [Issues](https://github.com/yourusername/yourproject/issues) - バグ報告や機能要望
-- [Discussions](https://github.com/yourusername/yourproject/discussions) - 質問や相談
+- [Issues](https://github.com/n-tong009/static-site-generator/issues) - バグ報告や機能要望
+- [Discussions](https://github.com/n-tong009/static-site-generator/discussions) - 質問や相談
 
 ---
 
