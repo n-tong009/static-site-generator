@@ -1,0 +1,85 @@
+<%
+// Head.ejs
+const {
+  title = DEFAULT_PAGE_META.title,
+  description = DEFAULT_PAGE_META.description,
+  ogType = DEFAULT_PAGE_META.ogType,
+  ogImage = DEFAULT_PAGE_META.ogImage,
+  noindex = false,
+  nofollow = false,
+  pagePath,
+  customHead = '' // デフォルト値を設定して未定義エラーを防止
+} = locals;
+
+// URLパスの生成
+const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href;
+const ogImageURL = new URL(ogImage, SITE_CONFIG.url).href;
+const baseUrl = ''; // import.meta.env.BASE_URLの代わり
+%>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5">
+  <title><%= title %> | <%= SITE_CONFIG.name %></title>
+
+  <!-- SEO関連 -->
+  <meta name="description" content="<%= description %>">
+  <meta name="robots" content="<%= `${noindex ? 'noindex' : 'index'},${nofollow ? 'nofollow' : 'follow'}` %>">
+  <link rel="canonical" href="<%= canonicalURL %>">
+
+  <!-- セキュリティとパフォーマンス -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  
+  <!-- 書式の自動検出防止 -->
+  <meta name="format-detection" content="telephone=no,address=no,email=no">
+  
+  <!-- OGP (Facebook, その他のSNS) -->
+  <meta property="og:type" content="<%= ogType %>">
+  <meta property="og:site_name" content="<%= SITE_CONFIG.name %>">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= description %>">
+  <meta property="og:url" content="<%= canonicalURL %>">
+  <meta property="og:image" content="<%= ogImageURL %>">
+  <meta property="og:locale" content="<%= SITE_CONFIG.locale %>">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="<%= SEO_DEFAULTS.twitterCard %>">
+  <meta name="twitter:title" content="<%= title %>">
+  <meta name="twitter:description" content="<%= description %>">
+  <meta name="twitter:image" content="<%= ogImageURL %>">
+
+  <!-- アイコン -->
+  <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.ico` %>" sizes="32x32">
+  <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.png` %>" type="image/png" sizes="192x192">
+  <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.svg` %>" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="<%= `${baseUrl}${PATHS.images.appleTouchIcon}` %>">
+  
+  <!-- スタイルシート -->
+  <% if (isDev) { %>
+    <link rel="stylesheet" href="/scss/main.scss">
+    <script type="module" src="/scripts/main.js"></script>
+  <% } else { %>
+    <link rel="stylesheet" href="/assets/main.css">
+    <script type="module" src="/assets/main.js"></script>
+  <% } %>
+  
+  <!-- スロットの代わりにカスタムヘッド要素 -->
+  <%- customHead %>
+
+  <!-- ダークモード検知スクリプト -->
+  <script>
+    // システムのダークモード設定を検知
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+    
+    // ダークモード設定の変更を監視
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (e.matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    });
+  </script>
+</head>

@@ -1,0 +1,21 @@
+<%
+// DefaultLayout.ejs - 基本レイアウト
+// データをローカル変数として渡す
+const locals = frontMatter;
+locals.pagePath = pagePath;
+%>
+<!DOCTYPE html>
+<html lang="<%= SITE_CONFIG.defaultLocale %>">
+  <%- include('../partials/Head.ejs', { locals }) %>
+  <body>
+    <%- include('../partials/Header.ejs', { locals }) %>
+    
+    <main class="site-main">
+      <div class="container">
+        <%- content %>
+      </div>
+    </main>
+    
+    <%- include('../partials/Footer.ejs', { locals }) %>
+  </body>
+</html>

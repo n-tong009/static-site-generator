@@ -1,0 +1,18 @@
+<%
+// Header.ejs
+const { pagePath } = locals;
+const isActive = (path) => pagePath === path ? 'active' : '';
+%>
+<header class="site-header">
+  <div class="container">
+    <h1 class="site-logo">
+      <a href="/"><%- SITE_CONFIG.name %></a>
+    </h1>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="/" class="<%- isActive('/') %>">トップページ</a></li>
+        <li><a href="/about.html" class="<%- isActive('/about.html') %>">このプロジェクトについて</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
