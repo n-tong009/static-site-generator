@@ -5,11 +5,13 @@ const {
   description = DEFAULT_PAGE_META.description,
   ogType = DEFAULT_PAGE_META.ogType,
   ogImage = DEFAULT_PAGE_META.ogImage,
-  noindex = false,
+  noindex: _noindexLocal = undefined,
   nofollow = false,
   pagePath,
-  customHead = '' // デフォルト値を設定して未定義エラーを防止
-} = locals;
+  customHead = ''
+} = locals
+// STG 環境はデフォルト noindex。frontmatter で明示的に noindex: false を指定すれば上書き可
+const noindex = _noindexLocal !== undefined ? _noindexLocal : getCurrentEnv() === 'STG'
 
 // URLパスの生成
 const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href;
@@ -54,17 +56,20 @@ const baseUrl = ''; // import.meta.env.BASE_URLの代わり
   <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.svg` %>" type="image/svg+xml">
   <link rel="apple-touch-icon" href="<%= `${baseUrl}${PATHS.images.appleTouchIcon}` %>">
   
-  <!-- スタイルシート -->
+  <!-- スタイルシート (CDN base = ASSETS_URL[env]) -->
   <% if (isDev) { %>
-    <link rel="stylesheet" href="/scss/main.scss">
-    <script type="module" src="/scripts/main.js"></script>
+    <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>scss/main.scss">
+    <script type="module" src="<%= getCurrentAssetsUrl() %>scripts/main.js"></script>
   <% } else { %>
-    <link rel="stylesheet" href="/assets/main.css">
-    <script type="module" src="/assets/main.js"></script>
+    <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>assets/css/main.css">
+    <script type="module" src="<%= getCurrentAssetsUrl() %>assets/js/main.js"></script>
   <% } %>
   
   <!-- スロットの代わりにカスタムヘッド要素 -->
   <%- customHead %>
+
+  <!-- Analytics (PROD のみ出力) -->
+  <%- include('./Analytics.ejs', { position: 'head' }) %>
 
   <!-- ダークモード検知スクリプト -->
   <script>

@@ -8,6 +8,7 @@ locals.pagePath = pagePath;
 <html lang="<%= SITE_CONFIG.defaultLocale %>">
   <%- include('../partials/Head.ejs', { locals }) %>
   <body>
+    <%- include('../partials/Analytics.ejs', { position: 'body' }) %>
     <%- include('../partials/Header.ejs', { locals }) %>
     
     <main class="site-main">
