@@ -34,10 +34,24 @@ async function runBuild() {
   const ejsFiles = await glob('src/pages/**/*.ejs');
   
   // 全テンプレートを並列処理
-  await Promise.all(ejsFiles.map(file => 
+  await Promise.all(ejsFiles.map(file =>
     processTemplate(path.resolve(__dirname, '..', file), outputDir)
   ));
-  
+
+  // Prettier 整形(LP納品要件: 整形済み出力)
+  console.log(chalk.cyan('Formatting dist with Prettier...'))
+  const { format } = await import('prettier')
+  const prettierConfig = JSON.parse(await fs.readFile(path.resolve(__dirname, '../.prettierrc.json'), 'utf-8'))
+  const distFiles = await glob('dist/**/*.{html,css,js}')
+  for (const file of distFiles) {
+    const ext = path.extname(file).slice(1)
+    const parser = ext === 'html' ? 'html' : ext === 'css' ? 'css' : 'babel'
+    const content = await fs.readFile(file, 'utf-8')
+    const formatted = await format(content, { parser, ...prettierConfig })
+    await fs.writeFile(file, formatted, 'utf-8')
+  }
+  console.log(chalk.green(`✓ Formatted ${distFiles.length} files`))
+
   const endTime = Date.now();
   const duration = (endTime - startTime) / 1000;
   

@@ -7,8 +7,8 @@ import chalk from 'chalk';
 
 // 定数をインポート
 import * as constants from './constants.js';
-// Sentryエラーハンドリングをインポート
-import { captureException, captureWarning } from './sentry.js';
+import { url } from './url.js';
+import { glob } from 'glob';
 
 /**
  * テンプレートとレイアウトのキャッシュ
@@ -22,14 +22,89 @@ const templateCache = new Map();
 const layoutCache = new Map();
 
 /**
+ * render() ヘルパー用 partial キャッシュ
+ * @type {Map<string, function>}
+ */
+const partialCache = new Map();
+
+/**
  * パフォーマンス監視のための処理時間記録
  * @type {Map<string, number>}
  */
 const processingTimes = new Map();
 
+/** @type {Object|null} */
+let dataCache = null;
+
 /**
- * レイアウトを読み込む関数（Sentry統合版）
- * @param {string} layoutName - レイアウト名
+ * src/data/**\/*.json を再帰的に読み込み、ファイル名をキーとしたオブジェクトを返す
+ * src/data/faq.json → data.faq
+ * src/data/sections/hero.json → data.sections.hero
+ * @returns {Promise<Object>}
+ */
+async function loadData() {
+  if (dataCache && process.env.NODE_ENV === 'production') return dataCache;
+
+  const dataDir = path.resolve(process.cwd(), 'src/data');
+  if (!await fs.pathExists(dataDir)) return {};
+
+  const jsonFiles = await glob('src/data/**/*.json');
+  const data = {};
+
+  for (const file of jsonFiles) {
+    try {
+      const content = await fs.readJson(path.resolve(process.cwd(), file));
+      const relative = path.relative(dataDir, path.resolve(process.cwd(), file));
+      const keyPath = relative.replace(/\.json$/, '').split(path.sep);
+
+      let obj = data;
+      for (let i = 0; i < keyPath.length - 1; i++) {
+        if (!obj[keyPath[i]]) obj[keyPath[i]] = {};
+        obj = obj[keyPath[i]];
+      }
+      obj[keyPath[keyPath.length - 1]] = content;
+    } catch (err) {
+      console.error(chalk.red(`Failed to load data: ${file}`), err);
+    }
+  }
+
+  dataCache = data;
+  return data;
+}
+
+/**
+ * render() ヘルパー本体。`render('Hero', { title: 'X' })` で `src/partials/Hero.ejs` 描画。
+ * 同期動作 (EJS template 内呼出のため)。
+ * @param {string} name - partial 名 (拡張子なし)
+ * @param {Object} props - partial に渡すローカル変数
+ * @param {Object} baseContext - 親 renderContext (frontMatter/data/locals/url 等継承)
+ * @returns {string} レンダリング済 HTML
+ */
+function renderPartial(name, props, baseContext) {
+  const partialPath = path.resolve(process.cwd(), 'src/partials', `${name}.ejs`);
+  if (!partialCache.has(partialPath) || process.env.NODE_ENV !== 'production') {
+    if (!fs.pathExistsSync(partialPath)) {
+      throw new Error(`Partial not found: ${name} (${partialPath})`);
+    }
+    const content = fs.readFileSync(partialPath, 'utf-8');
+    const compiled = ejs.compile(content, {
+      filename: partialPath,
+      cache: true,
+      async: false,
+      root: path.resolve(process.cwd(), 'src'),
+      views: [
+        path.resolve(process.cwd(), 'src'),
+        path.resolve(process.cwd(), 'src/layouts'),
+        path.resolve(process.cwd(), 'src/partials'),
+      ],
+    });
+    partialCache.set(partialPath, compiled);
+  }
+  return partialCache.get(partialPath)({ ...baseContext, ...props });
+}
+
+/**
+ * レイアウトを読み込む関数 * @param {string} layoutName - レイアウト名
  * @returns {Promise<function>} コンパイルされたEJSテンプレート関数
  */
 async function loadLayout(layoutName) {
@@ -63,9 +138,8 @@ async function loadLayout(layoutName) {
     const endTime = Date.now();
     const duration = endTime - startTime;
     
-    // パフォーマンス監視: 遅い処理を警告
     if (duration > 1000) {
-      captureWarning(`Layout loading took ${duration}ms for ${layoutName}`);
+      console.warn(`Layout loading took ${duration}ms for ${layoutName}`)
     }
     
     return layoutCache.get(layoutPath);
@@ -74,17 +148,13 @@ async function loadLayout(layoutName) {
     enhancedError.originalError = error;
     enhancedError.layoutName = layoutName;
     
-    // Sentryにエラーを送信
-    captureException(enhancedError);
-    
     console.error(chalk.red(`Error loading layout: ${layoutName}`), error);
     throw enhancedError;
   }
 }
 
 /**
- * 共通のテンプレート処理ロジックを提供するベース関数（Sentry統合版）
- * @param {string} filePath - テンプレートファイルのパス
+ * 共通のテンプレート処理ロジックを提供するベース関数 * @param {string} filePath - テンプレートファイルのパス
  * @param {Object} [options={}] - オプション設定
  * @param {string} [options.outputDir] - 出力ディレクトリ
  * @param {boolean} [options.isDev] - 開発モードフラグ
@@ -108,12 +178,11 @@ async function baseTemplateProcessor(filePath, options = {}) {
       const fileContent = await fs.readFile(filePath, 'utf-8');
       const { data, content } = matter(fileContent);
       
-      // フロントマターの検証
       if (!data.title) {
-        captureWarning(`Missing title in frontmatter for ${templateId}`);
+        console.warn(`Missing title in frontmatter for ${templateId}`)
       }
       if (!data.description) {
-        captureWarning(`Missing description in frontmatter for ${templateId}`);
+        console.warn(`Missing description in frontmatter for ${templateId}`)
       }
       
       // レイアウト名を取得（デフォルトはDefaultLayout）
@@ -149,28 +218,37 @@ async function baseTemplateProcessor(filePath, options = {}) {
       customHead: data.customHead || ''
     };
     
+    // src/data/ JSON を読込み
+    const siteData = await loadData();
+
     // レンダリング用のコンテキストを作成
     const renderContext = {
       ...constants,
       frontMatter: data,
       pagePath,
-      locals
+      locals,
+      data: siteData,
     };
-    
+    renderContext.url = (p) => url(p, pagePath);
+    renderContext.render = (name, props = {}) => renderPartial(name, props, renderContext);
+
     // テンプレートをレンダリング（同期的に）
     const renderedContent = template(renderContext);
-    
+
     // レイアウトを読み込み
     const layout = await loadLayout(layoutName);
-    
+
     // レイアウトにテンプレートの内容を渡してレンダリング（同期的に）
-    const html = layout({
+    const layoutContext = {
       ...constants,
       content: renderedContent,
       frontMatter: data,
       pagePath,
-      locals
-    });
+      locals,
+    };
+    layoutContext.url = (p) => url(p, pagePath);
+    layoutContext.render = (name, props = {}) => renderPartial(name, props, layoutContext);
+    const html = layout(layoutContext);
     
     // 出力ファイルのパスを生成
     let outputPath;
@@ -186,9 +264,8 @@ async function baseTemplateProcessor(filePath, options = {}) {
     // パフォーマンス追跡
     processingTimes.set(templateId, duration);
     
-    // パフォーマンス監視: 処理時間が長い場合は警告
     if (duration > 2000) {
-      captureWarning(`Template processing took ${duration}ms for ${templateId}`);
+      console.warn(`Template processing took ${duration}ms for ${templateId}`)
     }
     
     console.log(chalk.green(`✓ Processed ${templateId} in ${duration}ms`));
@@ -212,17 +289,13 @@ async function baseTemplateProcessor(filePath, options = {}) {
     enhancedError.processingTime = duration;
     enhancedError.options = options;
     
-    // Sentryにエラーを送信
-    captureException(enhancedError);
-    
     console.error(chalk.red(`Error processing ${filePath}:`), error);
     throw enhancedError;
   }
 }
 
 /**
- * テンプレートを処理してHTMLファイルを生成する関数（Sentry統合版）
- * @param {string} filePath - テンプレートファイルのパス
+ * テンプレートを処理してHTMLファイルを生成する関数 * @param {string} filePath - テンプレートファイルのパス
  * @param {string} outputDir - 出力ディレクトリのパス
  * @returns {Promise<string>} 生成されたファイルのパス
  */
@@ -231,11 +304,7 @@ export async function processTemplate(filePath, outputDir) {
     const { html, outputPath } = await baseTemplateProcessor(filePath, { outputDir });
     
     if (!outputPath) {
-      const error = new Error('出力パスが指定されていません');
-      error.filePath = filePath;
-      error.outputDir = outputDir;
-      captureException(error);
-      throw error;
+      throw new Error('出力パスが指定されていません')
     }
     
     // ディレクトリが存在することを確認
@@ -247,17 +316,12 @@ export async function processTemplate(filePath, outputDir) {
     
     return outputPath;
   } catch (error) {
-    // ここでもエラーをキャッチしてSentryに送信
-    if (error.name !== 'EnhancedTemplateError') {
-      captureException(error);
-    }
-    throw error;
+    throw error
   }
 }
 
 /**
- * 開発サーバー用のテンプレート処理関数（Sentry統合版）
- * @param {string} filePath - テンプレートファイルのパス
+ * 開発サーバー用のテンプレート処理関数 * @param {string} filePath - テンプレートファイルのパス
  * @returns {Promise<string>} レンダリングされたHTML
  */
 export async function renderTemplate(filePath) {
@@ -265,8 +329,6 @@ export async function renderTemplate(filePath) {
     const { html } = await baseTemplateProcessor(filePath);
     return html;
   } catch (error) {
-    // 開発環境でのエラーも記録（ただし本番でないので警告レベル）
-    captureWarning(`Development render error: ${error.message}`);
     
     console.error(chalk.red(`Error rendering ${filePath}:`), error);
     
@@ -354,7 +416,9 @@ export function getPerformanceStats() {
 export function clearCache() {
   templateCache.clear();
   layoutCache.clear();
+  partialCache.clear();
   processingTimes.clear();
+  dataCache = null;
   console.log(chalk.yellow('Template and layout caches cleared'));
 }
 

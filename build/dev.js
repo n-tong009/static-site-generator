@@ -28,9 +28,9 @@ async function startDevServer() {
           const url = req.url === '/' ? '/index.html' : req.url;
           
           if (url.endsWith('.html')) {
-            // .htmlリクエストを対応するEJSファイルにマッピング
-            const pageName = path.basename(url, '.html');
-            const ejsPath = path.resolve(__dirname, '../src/pages', `${pageName}.ejs`);
+            // .htmlリクエストを対応するEJSファイルにマッピング (サブディレクトリ対応)
+            const relativePath = url.replace(/\.html$/, '').replace(/^\//, '')
+            const ejsPath = path.resolve(__dirname, '../src/pages', `${relativePath}.ejs`)
             
             try {
               if (await fs.pathExists(ejsPath)) {
