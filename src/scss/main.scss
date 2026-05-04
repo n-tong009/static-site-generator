@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // 変数
 $primary-color: #3498db;
 $secondary-color: #2ecc71;
@@ -101,7 +103,7 @@ body {
     }
     
     h3 {
-      color: darken($primary-color, 10%);
+      color: color.adjust($primary-color, $lightness: -10%);
     }
   }
 }
@@ -118,7 +120,7 @@ button {
   transition: background-color 0.3s ease;
   
   &:hover {
-    background-color: darken($secondary-color, 10%);
+    background-color: color.adjust($secondary-color, $lightness: -10%);
   }
 }
 
@@ -198,21 +200,21 @@ button {
   .site-main {
     section {
       h2 {
-        color: lighten($primary-color, 10%);
-        border-bottom-color: lighten($primary-color, 10%);
+        color: color.adjust($primary-color, $lightness: 10%);
+        border-bottom-color: color.adjust($primary-color, $lightness: 10%);
       }
-      
+
       h3 {
-        color: lighten($primary-color, 5%);
+        color: color.adjust($primary-color, $lightness: 5%);
       }
     }
   }
   
   a {
-    color: lighten($primary-color, 15%);
-    
+    color: color.adjust($primary-color, $lightness: 15%);
+
     &:hover {
-      color: lighten($primary-color, 25%);
+      color: color.adjust($primary-color, $lightness: 25%);
     }
   }
 }
@@ -221,7 +223,7 @@ button {
 .hero {
   text-align: center;
   padding: 3rem 0;
-  background: linear-gradient(to right, lighten($primary-color, 20%), lighten($secondary-color, 20%));
+  background: linear-gradient(to right, color.adjust($primary-color, $lightness: 20%), color.adjust($secondary-color, $lightness: 20%));
   color: white;
   border-radius: 8px;
   margin-bottom: 3rem;

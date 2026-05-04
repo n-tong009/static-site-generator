@@ -1,5 +1,7 @@
 // src/scripts/main.js
-import { THEME_CONFIG } from '../lib/constants.js';
+import '../scss/main.scss'
+import { THEME_CONFIG } from '../lib/constants.js'
+import './contactForm.js'
 
 /**
  * メインアプリケーションクラス
@@ -11,9 +13,6 @@ class App {
    */
   constructor() {
     this.isInitialized = false;
-    this.testButton = null;
-    
-    // 初期化処理
     this.init();
   }
 
@@ -22,99 +21,8 @@ class App {
    */
   init() {
     if (this.isInitialized) return;
-    
-    console.log('ページが読み込まれました！');
-    
-    // ダークモード設定を復元
     this.restoreThemeSettings();
-    
-    // DOM要素を取得
-    this.testButton = document.getElementById('testButton');
-    
-    // 各種セットアップを実行
-    this.setupTestButton();
-    this.setupMobileMenu();
-    this.pageTransitionEffect();
-    
     this.isInitialized = true;
-  }
-
-  /**
-   * テストボタンのイベントハンドラをセットアップ
-   */
-  setupTestButton() {
-    if (this.testButton) {
-      this.testButton.addEventListener('click', () => {
-        this.handleTestButtonClick();
-      });
-    }
-  }
-
-  /**
-   * テストボタンクリック時の処理
-   */
-  handleTestButtonClick() {
-    alert('ボタンがクリックされました！');
-    console.log('Test button clicked at:', new Date().toISOString());
-  }
-
-  /**
-   * モバイルメニューのセットアップ
-   */
-  setupMobileMenu() {
-    // 実際のプロジェクトでは、ここにモバイルメニューの実装を追加
-    // 例: ハンバーガーメニューの開閉処理など
-    console.log('Mobile menu setup completed');
-  }
-
-  /**
-   * ページ遷移時のアニメーション効果
-   */
-  pageTransitionEffect() {
-    // ページ読み込み完了時のアニメーション
-    document.body.classList.add('loaded');
-    
-    // 全てのリンクにクリックイベントを追加
-    const links = document.querySelectorAll('a');
-    links.forEach(link => this.setupLinkTransition(link));
-  }
-
-  /**
-   * 個別のリンクに遷移効果を設定
-   * @param {HTMLAnchorElement} link - リンク要素
-   */
-  setupLinkTransition(link) {
-    // 外部リンクやハッシュリンクは除外
-    if (
-      link.hostname === window.location.hostname && 
-      !link.hasAttribute('download') &&
-      !link.getAttribute('href')?.startsWith('#')
-    ) {
-      link.addEventListener('click', (e) => {
-        this.handleLinkClick(e, link);
-      });
-    }
-  }
-
-  /**
-   * リンククリック時の処理
-   * @param {Event} e - クリックイベント
-   * @param {HTMLAnchorElement} link - クリックされたリンク
-   */
-  handleLinkClick(e, link) {
-    const href = link.getAttribute('href');
-    
-    if (href) {
-      e.preventDefault();
-      
-      // フェードアウトアニメーション
-      document.body.classList.add('page-transition');
-      
-      // アニメーション後にページ遷移
-      setTimeout(() => {
-        window.location.href = href;
-      }, 300);
-    }
   }
 
   /**
