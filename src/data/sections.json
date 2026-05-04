@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "headline": "見出しテキスト",
+    "subheadline": "サブテキストをここに入力",
+    "ctaLabel": "今すぐ申し込む",
+    "ctaUrl": "#contact"
+  },
+  "features": [
+    {
+      "title": "特徴1",
+      "description": "特徴の説明文をここに入力します。"
+    },
+    {
+      "title": "特徴2",
+      "description": "特徴の説明文をここに入力します。"
+    },
+    {
+      "title": "特徴3",
+      "description": "特徴の説明文をここに入力します。"
+    }
+  ]
+}

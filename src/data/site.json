@@ -1,0 +1,12 @@
+{
+  "companyName": "株式会社サンプル",
+  "companyNameEn": "Sample Co., Ltd.",
+  "tel": "03-0000-0000",
+  "email": "info@example.com",
+  "address": "東京都千代田区〇〇1-1-1",
+  "sns": {
+    "twitter": "https://twitter.com/example",
+    "instagram": "https://instagram.com/example",
+    "facebook": "https://facebook.com/example"
+  }
+}
