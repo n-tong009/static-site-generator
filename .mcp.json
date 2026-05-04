@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "tailwindcss": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sitemcp@latest",
+        "https://tailwindcss.com/docs",
+        "-m",
+        "/docs/**"
+      ]
+    }
+  }
+}

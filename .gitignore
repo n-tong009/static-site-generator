@@ -48,3 +48,9 @@ yarn-error.log*
 
 # misc
 *.local
+
+# serena
+.serena
+
+# claude
+.claude
