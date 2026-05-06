@@ -5,9 +5,9 @@ const isActive = (path) => pagePath === path ? 'active' : '';
 %>
 <header class="site-header">
   <div class="container">
-    <h1 class="site-logo">
+    <p class="site-logo">
       <a href="<%= url('/') %>"><%- SITE_CONFIG.name %></a>
-    </h1>
+    </p>
     <nav class="site-nav">
       <ul>
         <li><a href="<%= url('/') %>" class="<%- isActive('/') %>">トップページ</a></li>

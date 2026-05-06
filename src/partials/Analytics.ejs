@@ -5,6 +5,20 @@
 // ANALYTICS.enabled が false (STG/DEV) の場合は何も出力しない
 const _pos = typeof position !== 'undefined' ? position : 'head'
 %>
+<% if (isAnalyticsEnabled() && _pos === 'head') { %>
+  <!-- Consent Mode v2 default deny -->
+  <script>
+    window.dataLayer = window.dataLayer || []
+    function gtag() { dataLayer.push(arguments) }
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500,
+    })
+  </script>
+<% } %>
 <% if (isAnalyticsEnabled() && ANALYTICS.gtmId) { %>
   <% if (_pos === 'head') { %>
   <!-- Google Tag Manager -->

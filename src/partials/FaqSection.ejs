@@ -1,0 +1,9 @@
+<section class="faq">
+  <h2>よくある質問</h2>
+  <% faq.items.forEach((item) => { %>
+    <details>
+      <summary><%= item.q %></summary>
+      <p><%= item.a %></p>
+    </details>
+  <% }); %>
+</section>

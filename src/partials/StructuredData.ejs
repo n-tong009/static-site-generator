@@ -1,0 +1,34 @@
+<%
+const _type = typeof structuredType !== 'undefined' ? structuredType : 'Organization'
+let _jsonld = null
+
+if (_type === 'Organization') {
+  _jsonld = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: data.site.companyName,
+    url: SITE_CONFIG.url,
+    logo: new URL('/images/og.jpg', SITE_CONFIG.url).href,
+  }
+  if (data.site.tel) _jsonld.telephone = data.site.tel
+  if (data.site.email) _jsonld.email = data.site.email
+  if (data.site.address) _jsonld.address = { '@type': 'PostalAddress', streetAddress: data.site.address }
+  if (data.site.sns) {
+    const sameAs = Object.values(data.site.sns).filter(Boolean)
+    if (sameAs.length) _jsonld.sameAs = sameAs
+  }
+} else if (_type === 'FAQPage' && data.faq && data.faq.items) {
+  _jsonld = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: data.faq.items.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  }
+}
+%>
+<% if (_jsonld) { %>
+<script type="application/ld+json"><%- JSON.stringify(_jsonld) %></script>
+<% } %>

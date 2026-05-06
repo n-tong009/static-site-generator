@@ -1,0 +1,11 @@
+<section class="features">
+  <h2>主な特徴</h2>
+  <div class="feature-grid">
+    <% features.forEach((f) => { %>
+      <div class="feature-item">
+        <h3><%= f.title %></h3>
+        <p><%= f.description %></p>
+      </div>
+    <% }); %>
+  </div>
+</section>

@@ -8,6 +8,9 @@ const {
   noindex: _noindexLocal = undefined,
   nofollow = false,
   pagePath,
+  preconnect = [],
+  preload = [],
+  structuredType = 'Organization',
   customHead = ''
 } = locals
 // STG 環境はデフォルト noindex。frontmatter で明示的に noindex: false を指定すれば上書き可
@@ -16,7 +19,6 @@ const noindex = _noindexLocal !== undefined ? _noindexLocal : getCurrentEnv() ==
 // URLパスの生成
 const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href;
 const ogImageURL = new URL(ogImage, SITE_CONFIG.url).href;
-const baseUrl = ''; // import.meta.env.BASE_URLの代わり
 %>
 <head>
   <meta charset="UTF-8">
@@ -28,8 +30,10 @@ const baseUrl = ''; // import.meta.env.BASE_URLの代わり
   <meta name="robots" content="<%= `${noindex ? 'noindex' : 'index'},${nofollow ? 'nofollow' : 'follow'}` %>">
   <link rel="canonical" href="<%= canonicalURL %>">
 
-  <!-- セキュリティとパフォーマンス -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <!-- セキュリティ -->
+  <% if (!isDev) { %>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.googletagmanager.com; font-src 'self' data:">
+  <% } %>
   <meta name="referrer" content="strict-origin-when-cross-origin">
   
   <!-- 書式の自動検出防止 -->
@@ -51,11 +55,19 @@ const baseUrl = ''; // import.meta.env.BASE_URLの代わり
   <meta name="twitter:image" content="<%= ogImageURL %>">
 
   <!-- アイコン -->
-  <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.ico` %>" sizes="32x32">
-  <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.png` %>" type="image/png" sizes="192x192">
-  <link rel="icon" href="<%= `${baseUrl}${PATHS.images.favicon}.svg` %>" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="<%= `${baseUrl}${PATHS.images.appleTouchIcon}` %>">
+  <link rel="icon" href="<%= PATHS.images.favicon %>.ico" sizes="32x32">
+  <link rel="icon" href="<%= PATHS.images.favicon %>.png" type="image/png" sizes="192x192">
+  <link rel="icon" href="<%= PATHS.images.favicon %>.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="<%= PATHS.images.appleTouchIcon %>">
   
+  <!-- preconnect / preload (frontmatter から) -->
+  <% preconnect.forEach((href) => { %>
+  <link rel="preconnect" href="<%= href %>" crossorigin>
+  <% }); %>
+  <% preload.forEach((item) => { %>
+  <link rel="preload" href="<%= item.href %>" as="<%= item.as %>"<% if (item.type) { %> type="<%= item.type %>"<% } %><% if (item.fetchpriority) { %> fetchpriority="<%= item.fetchpriority %>"<% } %><% if (item.crossorigin) { %> crossorigin<% } %>>
+  <% }); %>
+
   <!-- スタイルシート (CDN base = ASSETS_URL[env]) -->
   <% if (isDev) { %>
     <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>scss/main.scss">
@@ -71,20 +83,6 @@ const baseUrl = ''; // import.meta.env.BASE_URLの代わり
   <!-- Analytics (PROD のみ出力) -->
   <%- include('./Analytics.ejs', { position: 'head' }) %>
 
-  <!-- ダークモード検知スクリプト -->
-  <script>
-    // システムのダークモード設定を検知
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.classList.add('dark');
-    }
-    
-    // ダークモード設定の変更を監視
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (e.matches) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-    });
-  </script>
+  <!-- 構造化データ (JSON-LD) -->
+  <%- include('./StructuredData.ejs', { structuredType }) %>
 </head>
