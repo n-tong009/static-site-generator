@@ -1,22 +1,19 @@
 {
   "hero": {
-    "headline": "見出しテキスト",
-    "subheadline": "サブテキストをここに入力",
-    "ctaLabel": "今すぐ申し込む",
-    "ctaUrl": "#contact"
+    "headline": "30日でCV2倍",
+    "subheadline": "プロのLP制作会社が貴社の課題を解決",
+    "ctaLabel": "無料相談する",
+    "ctaUrl": "/contact.html"
   },
   "features": [
-    {
-      "title": "特徴1",
-      "description": "特徴の説明文をここに入力します。"
-    },
-    {
-      "title": "特徴2",
-      "description": "特徴の説明文をここに入力します。"
-    },
-    {
-      "title": "特徴3",
-      "description": "特徴の説明文をここに入力します。"
-    }
-  ]
+    { "title": "高速制作", "description": "最短3営業日で初稿納品" },
+    { "title": "成果保証", "description": "CVR向上にコミット" },
+    { "title": "全方位対応", "description": "SEO/CRO/計測を一貫支援" }
+  ],
+  "ctaSection": {
+    "title": "今すぐ無料相談",
+    "subtitle": "まずはお気軽にお問い合わせください",
+    "ctaLabel": "問い合わせる",
+    "ctaUrl": "/contact.html"
+  }
 }
