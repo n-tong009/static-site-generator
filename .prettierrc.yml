@@ -1,0 +1,15 @@
+printWidth: 160
+tabWidth: 2
+useTabs: false
+semi: false
+singleQuote: true
+trailingComma: 'none'
+bracketSpacing: true
+bracketSameLine: false
+htmlWhitespaceSensitivity: 'ignore'
+plugins:
+  - '@trivago/prettier-plugin-sort-imports'
+importOrder:
+  - '<THIRD_PARTY_MODULES>'
+  - '^[./]'
+importOrderSeparation: true

@@ -9,6 +9,37 @@
         "-m",
         "/docs/**"
       ]
+    },
+    "vite": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sitemcp@latest",
+        "https://vite.dev",
+        "-m",
+        "/guide/**",
+        "/config/**"
+      ]
+    },
+    "typescript": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sitemcp@latest",
+        "https://www.typescriptlang.org/docs",
+        "-m",
+        "/handbook/**"
+      ]
+    },
+    "ejs": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sitemcp@latest",
+        "https://ejs.co",
+        "-m",
+        "/**"
+      ]
     }
   }
 }

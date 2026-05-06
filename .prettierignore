@@ -1,0 +1,15 @@
+# 自動生成・ビルド成果物
+/dist/
+.serena
+
+# 依存関係
+node_modules/
+
+# ロックファイル
+pnpm-lock.yaml
+
+# JSON（フォーマット対象外）
+*.json
+
+# 静的アセット
+/public/
