@@ -31,7 +31,7 @@ export function getCurrentEnv() {
 export const SITE_URL = {
   DEV: 'http://localhost:3000/',
   STG: 'https://stg.example.com/',
-  PROD: 'https://example.com/',
+  PROD: 'https://example.com/'
 }
 
 /**
@@ -41,7 +41,7 @@ export const BASE_URL = {
   STATUS: false,
   DEV: '/',
   STG: '/',
-  PROD: '/',
+  PROD: '/'
 }
 
 /**
@@ -52,7 +52,7 @@ export const BASE_URL = {
 export const ASSETS_URL = {
   DEV: '/',
   STG: '', // 例: 'https://stg-cdn.example.com/'
-  PROD: '', // 例: 'https://cdn.example.com/'
+  PROD: '' // 例: 'https://cdn.example.com/'
 }
 
 /**
@@ -89,10 +89,12 @@ export const SITE_CONFIG = {
   name: 'LP Builder',
   title: 'LP Builder',
   description: 'EJS×Vite LP納品テンプレート',
-  url: getCurrentSiteUrl(),
+  get url() {
+    return getCurrentSiteUrl()
+  },
   author: '',
   locale: 'ja_JP',
-  defaultLocale: 'ja',
+  defaultLocale: 'ja'
 }
 
 /**
@@ -101,7 +103,7 @@ export const SITE_CONFIG = {
 export const SEO_DEFAULTS = {
   ogType: 'website',
   ogImage: '/images/og.jpg',
-  twitterCard: 'summary_large_image',
+  twitterCard: 'summary_large_image'
 }
 
 /**
@@ -109,10 +111,16 @@ export const SEO_DEFAULTS = {
  */
 export const PATHS = {
   images: {
-    favicon: `${getCurrentAssetsUrl()}favicon`,
-    ogp: `${getCurrentAssetsUrl()}images/og.jpg`,
-    appleTouchIcon: `${getCurrentAssetsUrl()}images/apple-touch-icon.png`,
-  },
+    get favicon() {
+      return `${getCurrentAssetsUrl()}favicon`
+    },
+    get ogp() {
+      return `${getCurrentAssetsUrl()}images/og.jpg`
+    },
+    get appleTouchIcon() {
+      return `${getCurrentAssetsUrl()}images/apple-touch-icon.png`
+    }
+  }
 }
 
 /**
@@ -122,7 +130,7 @@ export const DEFAULT_PAGE_META = {
   title: SITE_CONFIG.title,
   description: SITE_CONFIG.description,
   ogType: SEO_DEFAULTS.ogType,
-  ogImage: SEO_DEFAULTS.ogImage,
+  ogImage: SEO_DEFAULTS.ogImage
 }
 
 /**
@@ -131,15 +139,7 @@ export const DEFAULT_PAGE_META = {
 export const SOCIAL_LINKS = {
   twitter: '',
   facebook: '',
-  instagram: '',
-}
-
-/**
- * @type {{ defaultTheme: string; themeStorageKey: string }}
- */
-export const THEME_CONFIG = {
-  defaultTheme: 'light',
-  themeStorageKey: 'theme-preference',
+  instagram: ''
 }
 
 /**
@@ -151,10 +151,14 @@ export const ANALYTICS = {
   enabled: {
     DEV: false,
     STG: false,
-    PROD: true,
+    PROD: true
   },
-  gtmId: '', // 例: 'GTM-XXXXXXX'
-  gaId: '', // 例: 'G-XXXXXXXXXX' (GTM未使用時)
+  get gtmId() {
+    return process.env.ANALYTICS_GTM_ID || ''
+  },
+  get gaId() {
+    return process.env.ANALYTICS_GA_ID || ''
+  }
 }
 
 /**
@@ -170,15 +174,21 @@ export const isAnalyticsEnabled = () => ANALYTICS.enabled[getCurrentEnv()] === t
  */
 export const FORM_CONFIG = {
   endpoint: {
-    DEV: '', // 例: 'https://formspree.io/f/dev-id'
-    STG: '', // 例: 'https://formspree.io/f/stg-id'
-    PROD: '', // 例: 'https://formspree.io/f/prod-id'
+    get DEV() {
+      return process.env.FORM_ENDPOINT_DEV || ''
+    },
+    get STG() {
+      return process.env.FORM_ENDPOINT_STG || ''
+    },
+    get PROD() {
+      return process.env.FORM_ENDPOINT_PROD || ''
+    }
   },
   method: 'POST',
   mode: 'submit', // 'submit' or 'fetch'
   thanksUrl: '/thanks.html',
   successMessage: '送信完了。担当者より連絡。',
-  errorMessage: '送信失敗。時間をおいて再度お試し。',
+  errorMessage: '送信失敗。時間をおいて再度お試し。'
 }
 
 /**
