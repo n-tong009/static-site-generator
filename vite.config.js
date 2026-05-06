@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite'
-import { fileURLToPath } from 'url'
 import { dirname, resolve } from 'path'
+import { fileURLToPath } from 'url'
+import { defineConfig } from 'vite'
+
 import { ASSETS_URL } from './src/lib/constants.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -13,6 +14,19 @@ export default defineConfig({
   root: 'src',
   base,
   publicDir: '../public',
+  plugins: [
+    {
+      name: 'data-hmr',
+      configureServer(server) {
+        server.watcher.add('src/data/**/*.json')
+        server.watcher.on('change', (file) => {
+          if (file.includes('src/data/') || file.includes('src\\data\\')) {
+            server.ws.send({ type: 'full-reload' })
+          }
+        })
+      }
+    }
+  ],
   build: {
     outDir: '../dist',
     emptyOutDir: true,
@@ -21,7 +35,7 @@ export default defineConfig({
     target: 'esnext',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'src/scripts/main.js'),
+        main: resolve(__dirname, 'src/scripts/main.js')
       },
       output: {
         entryFileNames: 'assets/js/[name].js',
@@ -29,17 +43,17 @@ export default defineConfig({
         assetFileNames: (assetInfo) => {
           if (assetInfo.name?.endsWith('.css')) return 'assets/css/[name][extname]'
           return 'assets/[name][extname]'
-        },
-      },
-    },
+        }
+      }
+    }
   },
   server: {
     port: 3000,
     open: true,
-    watch: { ignored: ['**/node_modules/**', '**/dist/**'] },
+    watch: { ignored: ['**/node_modules/**', '**/dist/**'] }
   },
   resolve: {
-    alias: { '@': resolve(__dirname, 'src') },
+    alias: { '@': resolve(__dirname, 'src') }
   },
-  esbuild: process.env.NODE_ENV === 'production' ? { drop: ['console', 'debugger'] } : {},
+  esbuild: process.env.NODE_ENV === 'production' ? { drop: ['console', 'debugger'] } : {}
 })
