@@ -12,6 +12,15 @@ document.querySelectorAll('[data-contact-form]').forEach((form) => {
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
+    const honeypot = form.querySelector('input[name="website"]')
+    if (honeypot && honeypot.value !== '') {
+      if (msg) {
+        msg.textContent = form.dataset.successMsg || '送信完了'
+        msg.hidden = false
+      }
+      form.reset()
+      return
+    }
     const successMsg = form.dataset.successMsg || '送信完了'
     const errorMsg = form.dataset.errorMsg || '送信失敗'
 
@@ -19,11 +28,15 @@ document.querySelectorAll('[data-contact-form]').forEach((form) => {
       const res = await fetch(action, {
         method: form.method || 'POST',
         body: new FormData(form),
-        headers: { Accept: 'application/json' },
+        headers: { Accept: 'application/json' }
       })
       msg.textContent = res.ok ? successMsg : errorMsg
       msg.hidden = false
-      if (res.ok) form.reset()
+      if (res.ok) {
+        window.dataLayer = window.dataLayer || []
+        window.dataLayer.push({ event: 'form_submit', form_name: form.dataset.formName || 'contact' })
+        form.reset()
+      }
     } catch {
       msg.textContent = errorMsg
       msg.hidden = false

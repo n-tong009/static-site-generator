@@ -35,48 +35,48 @@ body {
   background-color: $header-bg;
   color: white;
   padding: 1rem 0;
-  
+
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  
+
   .site-logo {
     margin: 0;
     font-size: 1.5rem;
-    
+
     a {
       color: white;
       text-decoration: none;
-      
+
       &:hover {
         text-decoration: none;
       }
     }
   }
-  
+
   .site-nav {
     ul {
       display: flex;
       list-style: none;
       margin: 0;
       padding: 0;
-      
+
       li {
         margin-left: 1.5rem;
-        
+
         a {
           color: white;
           text-decoration: none;
           padding: 0.5rem;
           border-radius: 4px;
           transition: background-color 0.3s;
-          
+
           &:hover {
             background-color: rgba(255, 255, 255, 0.1);
           }
-          
+
           &.active {
             background-color: rgba(255, 255, 255, 0.2);
             font-weight: bold;
@@ -91,17 +91,17 @@ body {
 .site-main {
   flex: 1;
   padding: 2rem 0;
-  
+
   section {
     margin-bottom: 3rem;
-    
+
     h2 {
       color: $primary-color;
       border-bottom: 2px solid $primary-color;
       padding-bottom: 0.5rem;
       margin-top: 0;
     }
-    
+
     h3 {
       color: color.adjust($primary-color, $lightness: -10%);
     }
@@ -118,7 +118,7 @@ button {
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s ease;
-  
+
   &:hover {
     background-color: color.adjust($secondary-color, $lightness: -10%);
   }
@@ -129,36 +129,36 @@ button {
   background-color: $footer-bg;
   color: white;
   padding: 2rem 0;
-  
+
   .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .copyright {
     margin: 0;
   }
-  
+
   .footer-nav {
     ul {
       display: flex;
       list-style: none;
       margin: 0;
       padding: 0;
-      
+
       li {
         margin-right: 1.5rem;
-        
+
         &:last-child {
           margin-right: 0;
         }
-        
+
         a {
           color: rgba(255, 255, 255, 0.8);
           text-decoration: none;
-          
+
           &:hover {
             color: white;
             text-decoration: underline;
@@ -167,11 +167,11 @@ button {
       }
     }
   }
-  
+
   .social-links {
     display: flex;
     gap: 1rem;
-    
+
     .social-link {
       color: white;
       text-decoration: none;
@@ -179,42 +179,10 @@ button {
       border-radius: 4px;
       background-color: rgba(255, 255, 255, 0.1);
       transition: background-color 0.3s;
-      
+
       &:hover {
         background-color: rgba(255, 255, 255, 0.2);
       }
-    }
-  }
-}
-
-// ダークモード対応
-.dark {
-  --background-color: #1a1a1a;
-  --text-color: #f0f0f0;
-  
-  body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-  }
-  
-  .site-main {
-    section {
-      h2 {
-        color: color.adjust($primary-color, $lightness: 10%);
-        border-bottom-color: color.adjust($primary-color, $lightness: 10%);
-      }
-
-      h3 {
-        color: color.adjust($primary-color, $lightness: 5%);
-      }
-    }
-  }
-  
-  a {
-    color: color.adjust($primary-color, $lightness: 15%);
-
-    &:hover {
-      color: color.adjust($primary-color, $lightness: 25%);
     }
   }
 }
@@ -227,14 +195,14 @@ button {
   color: white;
   border-radius: 8px;
   margin-bottom: 3rem;
-  
+
   h2 {
     color: white !important;
     border-bottom: none !important;
     font-size: 2.5rem;
     margin-bottom: 1rem;
   }
-  
+
   p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
@@ -249,28 +217,23 @@ button {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
-  
+
   .feature-item {
     background-color: white;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s;
+
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     h3 {
       margin-top: 0;
-    }
-  }
-  
-  // ダークモード対応
-  .dark & {
-    .feature-item {
-      background-color: #2a2a2a;
     }
   }
 }
@@ -282,21 +245,21 @@ button {
       flex-direction: column;
       align-items: flex-start;
     }
-    
+
     .site-nav {
       margin-top: 1rem;
       width: 100%;
-      
+
       ul {
         flex-wrap: wrap;
-        
+
         li {
           margin: 0.5rem 1rem 0.5rem 0;
         }
       }
     }
   }
-  
+
   .site-footer {
     .container {
       flex-direction: column;
@@ -304,8 +267,84 @@ button {
       gap: 1rem;
     }
   }
-  
+
   .feature-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+// LP 雛形セクション
+.btn-primary {
+  display: inline-block;
+  background-color: $secondary-color;
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: color.adjust($secondary-color, $lightness: -10%);
+    color: white;
+  }
+}
+
+.testimonials {
+  blockquote {
+    border-left: 4px solid $primary-color;
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    background-color: white;
+    border-radius: 0 4px 4px 0;
+
+    p {
+      margin: 0 0 0.5rem;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: color.adjust($text-color, $lightness: 20%);
+    }
+  }
+}
+
+.faq {
+  details {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0.5rem 0;
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      padding: 0.5rem 0;
+      list-style: none;
+
+      &::before {
+        content: '+ ';
+        color: $primary-color;
+      }
+    }
+
+    &[open] summary::before {
+      content: '− ';
+    }
+
+    p {
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      margin: 0;
+    }
+  }
+}
+
+.cta-bottom {
+  text-align: center;
+  padding: 3rem 0;
+  background-color: color.adjust($primary-color, $lightness: 35%);
+  border-radius: 8px;
+
+  h2 {
+    color: $primary-color;
+    border-bottom: none !important;
   }
 }
