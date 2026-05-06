@@ -2,6 +2,16 @@
 
 LP納品最適化 静的サイトジェネレータ。
 
+## 設計方針
+
+このテンプレは「**編集容易性 > Lighthouse 100点**」のスタンス。
+
+- JS/CSS/HTML 非圧縮 → Lighthouse Performance 上限あり (85〜90が現実値)
+- ハッシュなしファイル名 → 長期キャッシュ最適化を犠牲に編集容易性確保
+- LP納品先 (制作会社経由 等) で**コーダーが直接 dist/ を触る前提**
+
+Lighthouse満点を最優先する場合、本テンプレは適合しない (別ツール推奨)。
+
 ## 特徴
 
 - 非圧縮ビルド (HTML/CSS/JS Prettier整形済み)
@@ -12,10 +22,10 @@ LP納品最適化 静的サイトジェネレータ。
 ## クイックスタート
 
 ```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # → dist/
-npm run preview  # dist/ 静的プレビュー
+pnpm install
+pnpm dev      # http://localhost:3000
+pnpm build    # → dist/
+pnpm preview  # dist/ 静的プレビュー
 ```
 
 ## ディレクトリ構造
@@ -36,7 +46,7 @@ dist/         納品物
 
 ### 色変更
 
-`src/scss/main.scss` の変数編集 → `npm run dev` で即時反映
+`src/scss/main.scss` の変数編集 → `pnpm dev` で即時反映
 
 ### 画像差替
 
@@ -44,7 +54,7 @@ dist/         納品物
 
 ### 文言修正
 
-`src/pages/*.ejs` を編集 → `npm run build`
+`src/pages/*.ejs` を編集 → `pnpm build`
 
 ### ページ追加
 
@@ -61,7 +71,7 @@ layout: 'DefaultLayout'
 
 ## 納品手順
 
-1. `npm run build` で `dist/` 生成
+1. `pnpm build` で `dist/` 生成
 2. `dist/` 内容をクライアントサーバへアップロード
 3. 非圧縮・ハッシュなしのため、納品後の文言修正は `dist/*.html` 直接編集も可
 
