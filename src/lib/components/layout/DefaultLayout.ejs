@@ -6,10 +6,10 @@ locals.pagePath = pagePath;
 %>
 <!DOCTYPE html>
 <html lang="<%= SITE_CONFIG.defaultLocale %>">
-  <%- include('../partials/Head.ejs', { locals }) %>
+  <%- include('./Head.ejs', { locals }) %>
   <body>
-    <%- include('../partials/Analytics.ejs', { position: 'body' }) %>
-    <%- include('../partials/Header.ejs', { locals }) %>
+    <%- include('./Analytics.ejs', { position: 'body' }) %>
+    <%- include('./Header.ejs', { locals }) %>
     
     <main class="site-main">
       <div class="container">
@@ -17,6 +17,6 @@ locals.pagePath = pagePath;
       </div>
     </main>
     
-    <%- include('../partials/Footer.ejs', { locals }) %>
+    <%- include('./Footer.ejs', { locals }) %>
   </body>
 </html>

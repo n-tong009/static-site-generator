@@ -45,10 +45,10 @@ let dataCache = null
 async function loadData() {
   if (dataCache && process.env.NODE_ENV === 'production') return dataCache
 
-  const dataDir = path.resolve(process.cwd(), 'src/data')
+  const dataDir = path.resolve(process.cwd(), 'src/lib/data')
   if (!(await fs.pathExists(dataDir))) return {}
 
-  const jsonFiles = await glob('src/data/**/*.json')
+  const jsonFiles = await glob('src/lib/data/**/*.json')
   const data = {}
 
   for (const file of jsonFiles) {
@@ -81,9 +81,11 @@ async function loadData() {
  * @returns {string} レンダリング済 HTML
  */
 function renderPartial(name, props, baseContext) {
-  const partialPath = path.resolve(process.cwd(), 'src/partials', `${name}.ejs`)
+  const sharedPath = path.resolve(process.cwd(), 'src/lib/components/shared', `${name}.ejs`)
+  const layoutPath = path.resolve(process.cwd(), 'src/lib/components/layout', `${name}.ejs`)
+  const partialPath = fs.existsSync(sharedPath) ? sharedPath : layoutPath
   if (!partialCache.has(partialPath) || process.env.NODE_ENV !== 'production') {
-    if (!fs.pathExistsSync(partialPath)) {
+    if (!fs.existsSync(partialPath)) {
       throw new Error(`Partial not found: ${name} (${partialPath})`)
     }
     const content = fs.readFileSync(partialPath, 'utf-8')
@@ -92,7 +94,7 @@ function renderPartial(name, props, baseContext) {
       cache: true,
       async: false,
       root: path.resolve(process.cwd(), 'src'),
-      views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/layouts'), path.resolve(process.cwd(), 'src/partials')]
+      views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/lib/components/layout'), path.resolve(process.cwd(), 'src/lib/components/shared')]
     })
     partialCache.set(partialPath, compiled)
   }
@@ -107,7 +109,7 @@ async function loadLayout(layoutName) {
   const startTime = Date.now()
 
   try {
-    const layoutPath = path.resolve(process.cwd(), 'src/layouts', `${layoutName}.ejs`)
+    const layoutPath = path.resolve(process.cwd(), 'src/lib/components/layout', `${layoutName}.ejs`)
 
     // キャッシュからレイアウトを取得するか、新しく読み込む
     if (!layoutCache.has(layoutPath) || process.env.NODE_ENV !== 'production') {
@@ -121,7 +123,7 @@ async function loadLayout(layoutName) {
         cache: true,
         async: false,
         root: path.resolve(process.cwd(), 'src'),
-        views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/layouts'), path.resolve(process.cwd(), 'src/partials')]
+        views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/lib/components/layout'), path.resolve(process.cwd(), 'src/lib/components/shared')]
       })
 
       layoutCache.set(layoutPath, compiledLayout)
@@ -186,7 +188,7 @@ async function baseTemplateProcessor(filePath, options = {}) {
         cache: true,
         async: false,
         root: path.resolve(process.cwd(), 'src'),
-        views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/layouts'), path.resolve(process.cwd(), 'src/partials')]
+        views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/lib/components/layout'), path.resolve(process.cwd(), 'src/lib/components/shared')]
       })
 
       // キャッシュに保存

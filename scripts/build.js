@@ -7,9 +7,9 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { build } from 'vite'
 
-import { SITE_CONFIG, getCurrentEnv } from '../src/lib/constants.js'
+import { SITE_CONFIG, getCurrentEnv } from '../src/lib/utils/constants.js'
 // テンプレート処理関数をインポート
-import { processTemplate } from '../src/lib/templateProcessor.js'
+import { processTemplate } from '../src/lib/utils/templateProcessor.js'
 
 // __dirnameの代わりに使用するための現在のファイルパスを取得
 const __filename = fileURLToPath(import.meta.url)

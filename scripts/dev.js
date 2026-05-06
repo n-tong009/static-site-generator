@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url'
 import { createServer } from 'vite'
 
 // テンプレート処理関数をインポート
-import { renderTemplate } from '../src/lib/templateProcessor.js'
+import { renderTemplate } from '../src/lib/utils/templateProcessor.js'
 
 // __dirnameの代わりに使用するための現在のファイルパスを取得
 const __filename = fileURLToPath(import.meta.url)

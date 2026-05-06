@@ -2,7 +2,7 @@ import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 
-import { ASSETS_URL } from './src/lib/constants.js'
+import { ASSETS_URL } from './src/lib/utils/constants.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -18,9 +18,9 @@ export default defineConfig({
     {
       name: 'data-hmr',
       configureServer(server) {
-        server.watcher.add('src/data/**/*.json')
+        server.watcher.add('src/lib/data/**/*.json')
         server.watcher.on('change', (file) => {
-          if (file.includes('src/data/') || file.includes('src\\data\\')) {
+          if (file.includes('src/lib/data/') || file.includes('src\\lib\\data\\')) {
             server.ws.send({ type: 'full-reload' })
           }
         })
