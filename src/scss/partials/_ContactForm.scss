@@ -1,0 +1,100 @@
+@use 'sass:color';
+@use '../common/config' as *;
+
+.contact-form {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 720px;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: $COLOR_BASE;
+  border: 1px solid color.adjust($COLOR_PRIMARY, $lightness: 34%);
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(44, 62, 80, 0.08);
+
+  &__field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  &__label {
+    color: color.adjust($COLOR_TEXT, $lightness: -8%);
+    font-weight: 700;
+    line-height: 1.5;
+
+    span {
+      color: #d64545;
+      margin-left: 0.15em;
+    }
+  }
+
+  &__control {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.8rem 0.9rem;
+    color: $COLOR_TEXT;
+    font: inherit;
+    line-height: 1.5;
+    background-color: #fbfdff;
+    border: 1px solid #ccd8e2;
+    border-radius: 6px;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background-color 0.2s ease;
+
+    &::placeholder {
+      color: #8a99a8;
+    }
+
+    &:hover {
+      border-color: color.adjust($COLOR_PRIMARY, $lightness: 10%);
+    }
+
+    &:focus {
+      background-color: $COLOR_BASE;
+      border-color: $COLOR_PRIMARY;
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.18);
+      outline: none;
+    }
+  }
+
+  textarea.contact-form__control {
+    min-height: 12rem;
+    resize: vertical;
+  }
+
+  &__honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  &__submit {
+    justify-self: start;
+    min-width: 12rem;
+    margin-top: 0.25rem;
+    font-weight: 700;
+  }
+
+  &__message {
+    padding: 0.85rem 1rem;
+    color: color.adjust($COLOR_TEXT, $lightness: -5%);
+    background-color: color.adjust($COLOR_SECONDARY, $lightness: 42%);
+    border-left: 4px solid $COLOR_SECONDARY;
+    border-radius: 4px;
+  }
+
+  @include RESPONSIVE('SP', $MIN_WIDTH) {
+    gap: 1rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+
+    &__submit {
+      justify-self: stretch;
+      width: 100%;
+    }
+  }
+}
