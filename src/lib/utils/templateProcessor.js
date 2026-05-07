@@ -91,10 +91,14 @@ function renderPartial(name, props, baseContext) {
     const content = fs.readFileSync(partialPath, 'utf-8')
     const compiled = ejs.compile(content, {
       filename: partialPath,
-      cache: true,
+      cache: process.env.NODE_ENV === 'production',
       async: false,
       root: path.resolve(process.cwd(), 'src'),
-      views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/lib/components/layout'), path.resolve(process.cwd(), 'src/lib/components/shared')]
+      views: [
+        path.resolve(process.cwd(), 'src'),
+        path.resolve(process.cwd(), 'src/lib/components/layout'),
+        path.resolve(process.cwd(), 'src/lib/components/shared')
+      ]
     })
     partialCache.set(partialPath, compiled)
   }
@@ -120,10 +124,14 @@ async function loadLayout(layoutName) {
       // 同期的なEJSコンパイル設定（asyncをfalseに）
       const compiledLayout = ejs.compile(layoutContent, {
         filename: layoutPath,
-        cache: true,
+        cache: process.env.NODE_ENV === 'production',
         async: false,
         root: path.resolve(process.cwd(), 'src'),
-        views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/lib/components/layout'), path.resolve(process.cwd(), 'src/lib/components/shared')]
+        views: [
+          path.resolve(process.cwd(), 'src'),
+          path.resolve(process.cwd(), 'src/lib/components/layout'),
+          path.resolve(process.cwd(), 'src/lib/components/shared')
+        ]
       })
 
       layoutCache.set(layoutPath, compiledLayout)
@@ -185,10 +193,14 @@ async function baseTemplateProcessor(filePath, options = {}) {
       // テンプレートをコンパイル（同期処理）
       const template = ejs.compile(content, {
         filename: filePath,
-        cache: true,
+        cache: process.env.NODE_ENV === 'production',
         async: false,
         root: path.resolve(process.cwd(), 'src'),
-        views: [path.resolve(process.cwd(), 'src'), path.resolve(process.cwd(), 'src/lib/components/layout'), path.resolve(process.cwd(), 'src/lib/components/shared')]
+        views: [
+          path.resolve(process.cwd(), 'src'),
+          path.resolve(process.cwd(), 'src/lib/components/layout'),
+          path.resolve(process.cwd(), 'src/lib/components/shared')
+        ]
       })
 
       // キャッシュに保存
@@ -421,6 +433,7 @@ export function clearCache() {
   partialCache.clear()
   processingTimes.clear()
   dataCache = null
+  ejs.clearCache()
   console.log(chalk.yellow('Template and layout caches cleared'))
 }
 

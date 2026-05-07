@@ -7,11 +7,23 @@ import { fileURLToPath } from 'url'
 import { createServer } from 'vite'
 
 // テンプレート処理関数をインポート
-import { renderTemplate } from '../src/lib/utils/templateProcessor.js'
+import { clearCache, renderTemplate } from '../src/lib/utils/templateProcessor.js'
 
 // __dirnameの代わりに使用するための現在のファイルパスを取得
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const projectRoot = path.resolve(__dirname, '..')
+const watchedEjsGlobs = ['src/pages/**/*.ejs', 'src/lib/components/**/*.ejs']
+
+function toProjectPath(file) {
+  const relativePath = path.isAbsolute(file) ? path.relative(projectRoot, file) : file
+  return relativePath.split(path.sep).join('/')
+}
+
+function isWatchedEjs(file) {
+  const projectPath = toProjectPath(file)
+  return projectPath.endsWith('.ejs') && (projectPath.startsWith('src/pages/') || projectPath.startsWith('src/lib/components/'))
+}
 
 // 開発サーバーを起動する関数
 async function startDevServer() {
@@ -25,9 +37,23 @@ async function startDevServer() {
       {
         name: 'ejs-template-handler',
         configureServer(server) {
+          server.watcher.add(watchedEjsGlobs)
+
+          const reloadEjs = (file) => {
+            if (!isWatchedEjs(file)) return
+            clearCache()
+            server.ws.send({ type: 'full-reload' })
+            console.log(chalk.gray(`[dev] reload: ${toProjectPath(file)}`))
+          }
+
+          server.watcher.on('add', reloadEjs)
+          server.watcher.on('change', reloadEjs)
+          server.watcher.on('unlink', reloadEjs)
+
           // カスタムミドルウェアを追加
           server.middlewares.use(async (req, res, next) => {
-            const url = req.url === '/' ? '/index.html' : req.url
+            const requestUrl = new URL(req.url || '/', 'http://localhost')
+            const url = requestUrl.pathname === '/' ? '/index.html' : requestUrl.pathname
 
             if (url.endsWith('.html')) {
               // .htmlリクエストを対応するEJSファイルにマッピング (サブディレクトリ対応)
@@ -37,8 +63,9 @@ async function startDevServer() {
               try {
                 if (await fs.pathExists(ejsPath)) {
                   const html = await renderTemplate(ejsPath)
+                  const transformedHtml = await server.transformIndexHtml(url, html)
                   res.setHeader('Content-Type', 'text/html')
-                  return res.end(html)
+                  return res.end(transformedHtml)
                 }
               } catch (error) {
                 console.error(chalk.red(`Error serving ${url}:`), error)
