@@ -1,0 +1,40 @@
+@use 'sass:math';
+@use '../common/config' as *;
+
+body {
+  background: $COLOR_BASE;
+  color: $COLOR_TEXT;
+  font-size: $FONT_SIZE;
+  font-family: $FONT_FAMILY;
+  line-height: $LINE_HEIGHT;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow-wrap: anywhere;
+  word-break: normal;
+  line-break: strict;
+}
+
+main {
+  flex: 1;
+}
+
+a {
+  color: $COLOR_LINK;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  line-height: $LINE_HEIGHT;
+}
+
+.container {
+  max-width: $MAX_WIDTH;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
