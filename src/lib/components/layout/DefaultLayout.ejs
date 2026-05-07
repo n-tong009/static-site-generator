@@ -3,11 +3,12 @@
 // データをローカル変数として渡す
 const locals = frontMatter;
 locals.pagePath = pagePath;
+locals.pageId = pageId;
 %>
 <!DOCTYPE html>
 <html lang="<%= SITE_CONFIG.defaultLocale %>">
   <%- include('./Head.ejs', { locals }) %>
-  <body>
+  <body data-page="<%= pageId %>">
     <%- include('./Analytics.ejs', { position: 'body' }) %>
     <%- include('./Header.ejs', { locals }) %>
     

@@ -200,10 +200,24 @@ async function baseTemplateProcessor(filePath, options = {}) {
     // ページ固有のデータを準備
     const pagePath = '/' + path.relative(path.resolve(process.cwd(), 'src/pages'), filePath).replace('.ejs', '.html')
 
+    // pageId 解決: frontmatter 明示宣言を優先、未定義時はファイル名から推論
+    const relFromPages = path.relative(path.resolve(process.cwd(), 'src/pages'), filePath).replace(/\.ejs$/, '')
+    const inferredPageId = relFromPages
+      .split(path.sep)
+      .map((seg, i) => (i === 0 ? seg : seg.charAt(0).toUpperCase() + seg.slice(1)))
+      .join('')
+      .replace(/[-_]([a-z])/g, (_, c) => c.toUpperCase())
+    const resolvedPageId = data.pageId || inferredPageId
+
+    if (!data.pageId) {
+      console.warn(chalk.yellow(`[pageId] frontmatter 未宣言 (${templateId}) → ファイル名から推論: ${resolvedPageId}`))
+    }
+
     // ローカル変数を準備
     const locals = {
       ...data,
       pagePath,
+      pageId: resolvedPageId,
       customHead: data.customHead || ''
     }
 
@@ -215,6 +229,7 @@ async function baseTemplateProcessor(filePath, options = {}) {
       ...constants,
       frontMatter: data,
       pagePath,
+      pageId: resolvedPageId,
       locals,
       data: siteData
     }
@@ -233,6 +248,7 @@ async function baseTemplateProcessor(filePath, options = {}) {
       content: renderedContent,
       frontMatter: data,
       pagePath,
+      pageId: resolvedPageId,
       locals,
       data: siteData
     }
