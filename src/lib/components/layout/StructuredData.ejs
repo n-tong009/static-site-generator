@@ -21,14 +21,18 @@ if (_type === 'Organization') {
   _jsonld = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: data.faq.items.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a },
-    })),
+    mainEntity: data.faq.items.map(function (item) {
+      return {
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      }
+    }),
   }
 }
 %>
 <% if (_jsonld) { %>
-<script type="application/ld+json"><%- JSON.stringify(_jsonld) %></script>
+<script type="application/ld+json">
+  <%- JSON.stringify(_jsonld) %>
+</script>
 <% } %>

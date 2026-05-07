@@ -9,6 +9,7 @@ bracketSameLine: false
 htmlWhitespaceSensitivity: 'ignore'
 plugins:
   - '@trivago/prettier-plugin-sort-imports'
+  - 'prettier-plugin-ejs'
 importOrder:
   - '<THIRD_PARTY_MODULES>'
   - '^[./]'

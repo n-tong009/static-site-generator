@@ -96,8 +96,8 @@ EJS 内参照例:
 
 <!-- 配列ループ -->
 <% data.faq.items.forEach((item) => { %>
-  <dt><%= item.q %></dt>
-  <dd><%= item.a %></dd>
+<dt><%= item.q %></dt>
+<dd><%= item.a %></dd>
 <% }) %>
 ```
 
@@ -227,7 +227,7 @@ EJS テンプレート内で `url()` ヘルパー経由でリンク生成:
 ```ejs
 <a href="<%= url('/about.html') %>">About</a>
 <a href="<%= url('/lp/campaign-a.html') %>">Campaign</a>
-<img src="<%= url('/images/hero.jpg') %>" alt="">
+<img src="<%= url('/images/hero.jpg') %>" alt="" />
 ```
 
 **自動処理** (記述側 意識不要):

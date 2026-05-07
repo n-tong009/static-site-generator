@@ -1,24 +1,23 @@
 <%
 // Footer.ejs
-const currentYear = new Date().getFullYear();
+const currentYear = new Date().getFullYear()
 %>
 <footer id="section-footer">
   <div class="container">
     <p class="copyright">&copy; <%= currentYear %> <%= SITE_CONFIG.name %></p>
-    
+
     <nav class="footer-nav">
       <ul>
         <li><a href="<%= url('/') %>">トップページ</a></li>
         <li><a href="<%= url('/about.html') %>">このプロジェクトについて</a></li>
       </ul>
     </nav>
-    
+
     <div class="social-links">
-      <% Object.entries(SOCIAL_LINKS).filter(([_, u]) => u).forEach(([key, url]) => { %>
-        <a href="<%= url %>" target="_blank" rel="noopener noreferrer" class="social-link <%= key %>">
-          <%= key %>
-        </a>
-      <% }); %>
+      <% for (const [key, socialUrl] of Object.entries(SOCIAL_LINKS)) { %> <% if (socialUrl) { %>
+      <a href="<%= socialUrl %>" target="_blank" rel="noopener noreferrer" class="social-link <%= key %>"><%= key %></a>
+      <% } %>
+      <% } %>
     </div>
   </div>
 </footer>

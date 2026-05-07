@@ -1,25 +1,68 @@
-html, body,
-h1, h2, h3, h4, h5, h6,
-a, p, span,
-em, small, strong,
-sub, sup,
-mark, del, ins, strike,
-abbr, dfn,
-blockquote, q, cite,
-code, pre,
-ol, ul, li, dl, dt, dd,
-div, section, article,
-main, aside, nav,
-header, hgroup, footer,
-img, figure, figcaption,
-address, time,
-audio, video,
-canvas, iframe,
-details, summary,
-fieldset, form, label, legend,
-table, caption,
-tbody, tfoot, thead,
-tr, th, td {
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+p,
+span,
+em,
+small,
+strong,
+sub,
+sup,
+mark,
+del,
+ins,
+strike,
+abbr,
+dfn,
+blockquote,
+q,
+cite,
+code,
+pre,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+div,
+section,
+article,
+main,
+aside,
+nav,
+header,
+hgroup,
+footer,
+img,
+figure,
+figcaption,
+address,
+time,
+audio,
+video,
+canvas,
+iframe,
+details,
+summary,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
   margin: 0;
   padding: 0;
   border: 0;
@@ -28,8 +71,18 @@ tr, th, td {
   vertical-align: baseline;
 }
 
-article, aside, details, figcaption, figure,
-footer, header, hgroup, main, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section {
   display: block;
 }
 
@@ -37,7 +90,9 @@ html {
   box-sizing: border-box;
 }
 
-*, *:after, *:before {
+*,
+*:after,
+*:before {
   box-sizing: inherit;
 }
 
@@ -54,7 +109,13 @@ a {
   text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   font-weight: normal;
 }
 
@@ -63,18 +124,22 @@ img {
   vertical-align: bottom;
 }
 
-img, video {
+img,
+video {
   max-width: 100%;
   height: auto;
 }
 
-ol, ul {
+ol,
+ul {
   list-style: none;
   list-style-type: none;
 }
 
-blockquote, q {
-  &:before, &:after {
+blockquote,
+q {
+  &:before,
+  &:after {
     content: '';
     content: none;
   }
@@ -109,7 +174,10 @@ textarea {
   }
 }
 
-input, select, button, textarea {
+input,
+select,
+button,
+textarea {
   padding: 0;
   border: none;
   outline: none;

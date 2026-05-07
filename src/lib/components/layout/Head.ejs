@@ -17,66 +17,83 @@ const {
 const noindex = _noindexLocal !== undefined ? _noindexLocal : getCurrentEnv() === 'STG'
 
 // URLパスの生成
-const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href;
-const ogImageURL = new URL(ogImage, SITE_CONFIG.url).href;
+const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href
+const ogImageURL = new URL(ogImage, SITE_CONFIG.url).href
+
+function renderPreloadAttr(name, value) {
+  return `${name}="${value}"`
+}
+
+function renderPreloadLink(item) {
+  const attrs = ['rel="preload"', renderPreloadAttr('href', item.href), renderPreloadAttr('as', item.as)]
+
+  if (item.type) attrs.push(renderPreloadAttr('type', item.type))
+  if (item.fetchpriority) attrs.push(renderPreloadAttr('fetchpriority', item.fetchpriority))
+  if (item.crossorigin) attrs.push('crossorigin')
+
+  return [String.fromCharCode(60) + 'link', ...attrs].join(' ') + String.fromCharCode(62)
+}
 %>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5" />
   <title><%= title %> | <%= SITE_CONFIG.name %></title>
 
   <!-- SEO関連 -->
-  <meta name="description" content="<%= description %>">
-  <meta name="robots" content="<%= `${noindex ? 'noindex' : 'index'},${nofollow ? 'nofollow' : 'follow'}` %>">
-  <link rel="canonical" href="<%= canonicalURL %>">
+  <meta name="description" content="<%= description %>" />
+  <meta name="robots" content="<%= `${noindex ? 'noindex' : 'index'},${nofollow ? 'nofollow' : 'follow'}` %>" />
+  <link rel="canonical" href="<%= canonicalURL %>" />
 
   <!-- セキュリティ -->
   <% if (!isDev) { %>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.googletagmanager.com; font-src 'self' data:">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.googletagmanager.com; font-src 'self' data:"
+  />
   <% } %>
-  <meta name="referrer" content="strict-origin-when-cross-origin">
-  
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
   <!-- 書式の自動検出防止 -->
-  <meta name="format-detection" content="telephone=no,address=no,email=no">
-  
+  <meta name="format-detection" content="telephone=no,address=no,email=no" />
+
   <!-- OGP (Facebook, その他のSNS) -->
-  <meta property="og:type" content="<%= ogType %>">
-  <meta property="og:site_name" content="<%= SITE_CONFIG.name %>">
-  <meta property="og:title" content="<%= title %>">
-  <meta property="og:description" content="<%= description %>">
-  <meta property="og:url" content="<%= canonicalURL %>">
-  <meta property="og:image" content="<%= ogImageURL %>">
-  <meta property="og:locale" content="<%= SITE_CONFIG.locale %>">
-  
+  <meta property="og:type" content="<%= ogType %>" />
+  <meta property="og:site_name" content="<%= SITE_CONFIG.name %>" />
+  <meta property="og:title" content="<%= title %>" />
+  <meta property="og:description" content="<%= description %>" />
+  <meta property="og:url" content="<%= canonicalURL %>" />
+  <meta property="og:image" content="<%= ogImageURL %>" />
+  <meta property="og:locale" content="<%= SITE_CONFIG.locale %>" />
+
   <!-- Twitter Card -->
-  <meta name="twitter:card" content="<%= SEO_DEFAULTS.twitterCard %>">
-  <meta name="twitter:title" content="<%= title %>">
-  <meta name="twitter:description" content="<%= description %>">
-  <meta name="twitter:image" content="<%= ogImageURL %>">
+  <meta name="twitter:card" content="<%= SEO_DEFAULTS.twitterCard %>" />
+  <meta name="twitter:title" content="<%= title %>" />
+  <meta name="twitter:description" content="<%= description %>" />
+  <meta name="twitter:image" content="<%= ogImageURL %>" />
 
   <!-- アイコン -->
-  <link rel="icon" href="<%= PATHS.images.favicon %>.ico" sizes="32x32">
-  <link rel="icon" href="<%= PATHS.images.favicon %>.png" type="image/png" sizes="192x192">
-  <link rel="icon" href="<%= PATHS.images.favicon %>.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="<%= PATHS.images.appleTouchIcon %>">
-  
+  <link rel="icon" href="<%= PATHS.images.favicon %>.ico" sizes="32x32" />
+  <link rel="icon" href="<%= PATHS.images.favicon %>.png" type="image/png" sizes="192x192" />
+  <link rel="icon" href="<%= PATHS.images.favicon %>.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="<%= PATHS.images.appleTouchIcon %>" />
+
   <!-- preconnect / preload (frontmatter から) -->
-  <% preconnect.forEach((href) => { %>
-  <link rel="preconnect" href="<%= href %>" crossorigin>
-  <% }); %>
-  <% preload.forEach((item) => { %>
-  <link rel="preload" href="<%= item.href %>" as="<%= item.as %>"<% if (item.type) { %> type="<%= item.type %>"<% } %><% if (item.fetchpriority) { %> fetchpriority="<%= item.fetchpriority %>"<% } %><% if (item.crossorigin) { %> crossorigin<% } %>>
-  <% }); %>
+  <% for (const href of preconnect) { %>
+  <link rel="preconnect" href="<%= href %>" crossorigin />
+  <% } %>
+  <% for (const item of preload) { %>
+  <%- renderPreloadLink(item) %>
+  <% } %>
 
   <!-- スタイルシート (CDN base = ASSETS_URL[env]) -->
   <% if (isDev) { %>
-    <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>scss/main.scss">
-    <script type="module" src="<%= getCurrentAssetsUrl() %>scripts/main.js"></script>
+  <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>scss/main.scss" />
+  <script type="module" src="<%= getCurrentAssetsUrl() %>scripts/main.js"></script>
   <% } else { %>
-    <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>assets/css/main.css">
-    <script type="module" src="<%= getCurrentAssetsUrl() %>assets/js/main.js"></script>
+  <link rel="stylesheet" href="<%= getCurrentAssetsUrl() %>assets/css/main.css" />
+  <script type="module" src="<%= getCurrentAssetsUrl() %>assets/js/main.js"></script>
   <% } %>
-  
+
   <!-- スロットの代わりにカスタムヘッド要素 -->
   <%- customHead %>
 

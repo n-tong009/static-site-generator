@@ -1,11 +1,16 @@
 <%
 // ContactForm.ejs — 汎用フォームパーシャル
-// endpoint は FORM_CONFIG (env別) 固定。他フィールドの優先順位: include引数(form) > page frontmatter(frontMatter.form) > FORM_CONFIG default
+// endpoint は FORM_CONFIG (env別) 固定。他フィールドは include引数(form)、page frontmatter、FORM_CONFIG default の順に優先
+function withoutEndpoint(source) {
+  const { endpoint: _endpoint, ...rest } = source
+  return rest
+}
+
 const _formCfg = {
   ...FORM_CONFIG,
   endpoint: getCurrentContactFormUrl(),
-  ...(typeof frontMatter !== 'undefined' && frontMatter.form ? (({ endpoint: _, ...rest }) => rest)(frontMatter.form) : {}),
-  ...(typeof form !== 'undefined' && form ? (({ endpoint: _, ...rest }) => rest)(form) : {}),
+  ...(typeof frontMatter !== 'undefined' && frontMatter.form ? withoutEndpoint(frontMatter.form) : {}),
+  ...(typeof form !== 'undefined' && form ? withoutEndpoint(form) : {}),
 }
 %>
 <form
@@ -20,51 +25,28 @@ const _formCfg = {
 >
   <div class="contact-form__field">
     <label class="contact-form__label" for="contact-name">
-      お名前 <span aria-hidden="true">*</span>
+      お名前
+      <span aria-hidden="true">*</span>
     </label>
-    <input
-      class="contact-form__control"
-      type="text"
-      id="contact-name"
-      name="name"
-      required
-      autocomplete="name"
-    >
+    <input class="contact-form__control" type="text" id="contact-name" name="name" required autocomplete="name" />
   </div>
   <div class="contact-form__field">
     <label class="contact-form__label" for="contact-email">
-      メールアドレス <span aria-hidden="true">*</span>
+      メールアドレス
+      <span aria-hidden="true">*</span>
     </label>
-    <input
-      class="contact-form__control"
-      type="email"
-      id="contact-email"
-      name="email"
-      required
-      autocomplete="email"
-    >
+    <input class="contact-form__control" type="email" id="contact-email" name="email" required autocomplete="email" />
   </div>
   <div class="contact-form__field">
     <label class="contact-form__label" for="contact-message">
-      お問い合わせ内容 <span aria-hidden="true">*</span>
+      お問い合わせ内容
+      <span aria-hidden="true">*</span>
     </label>
-    <textarea
-      class="contact-form__control"
-      id="contact-message"
-      name="message"
-      rows="6"
-      required
-    ></textarea>
+    <textarea class="contact-form__control" id="contact-message" name="message" rows="6" required></textarea>
   </div>
   <div class="contact-form__honeypot" aria-hidden="true">
     <label for="contact-website">Website (do not fill)</label>
-    <input
-      type="text"
-      id="contact-website"
-      name="website"
-      tabindex="-1"
-      autocomplete="off"
-    >
+    <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
   </div>
   <button class="contact-form__submit" type="submit">送信する</button>
   <div class="contact-form__message" data-form-message role="status" aria-live="polite" hidden></div>

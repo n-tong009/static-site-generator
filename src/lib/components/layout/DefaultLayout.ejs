@@ -9,15 +9,12 @@ locals.pageId = pageId;
 <html lang="<%= SITE_CONFIG.defaultLocale %>">
   <%- include('./Head.ejs', { locals }) %>
   <body data-page="<%= pageId %>">
-    <%- include('./Analytics.ejs', { position: 'body' }) %>
-    <%- include('./Header.ejs', { locals }) %>
-    
+    <%- include('./Analytics.ejs', { position: 'body' }) %> <%- include('./Header.ejs', { locals }) %>
+
     <main class="site-main">
-      <div class="container">
-        <%- content %>
-      </div>
+      <div class="container"><%- content %></div>
     </main>
-    
+
     <%- include('./Footer.ejs', { locals }) %>
   </body>
 </html>
