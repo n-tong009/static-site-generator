@@ -1,4 +1,4 @@
-// src/scripts/contactForm.js
+// src/scripts/shared/contactForm.js
 document.querySelectorAll('[data-contact-form]').forEach((form) => {
   if (form.dataset.mode !== 'fetch') return
 
