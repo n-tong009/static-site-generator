@@ -1,0 +1,15 @@
+@use 'sass:math';
+@use 'sass:color';
+@use '../common/config' as *;
+
+.cta-bottom {
+  text-align: center;
+  padding: 3rem 0;
+  background-color: color.adjust($COLOR_PRIMARY, $lightness: 35%);
+  border-radius: 8px;
+
+  h2 {
+    color: $COLOR_PRIMARY;
+    border-bottom: none !important;
+  }
+}

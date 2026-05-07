@@ -1,0 +1,32 @@
+@use 'sass:math';
+@use '../common/config' as *;
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+
+  .feature-item {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition:
+      transform 0.3s,
+      box-shadow 0.3s;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+  @include RESPONSIVE('SP', $MIN_WIDTH) {
+    grid-template-columns: 1fr;
+  }
+}

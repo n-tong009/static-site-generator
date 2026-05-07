@@ -1,0 +1,72 @@
+@use 'sass:math';
+@use '../common/config' as *;
+
+#section-footer {
+  background-color: $COLOR_FOOTER_BG;
+  color: white;
+  padding: 2rem 0;
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .copyright {
+    margin: 0;
+  }
+
+  .footer-nav {
+    ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        margin-right: 1.5rem;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        a {
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: none;
+
+          &:hover {
+            color: white;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+
+    .social-link {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.1);
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  @include RESPONSIVE('SP', $MIN_WIDTH) {
+    .container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+}
