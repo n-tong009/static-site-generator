@@ -26,6 +26,9 @@ src/
   partials/   # 再利用部品
   lib/        # 定数・テンプレプロセッサ
   scripts/    # クライアントJS
+    shared/   # 共通utility・副作用entry
+    pages/    # ページ別処理（pageId 1対1）
+    modules/  # 再利用UI部品Class
   scss/       # Sass
 scripts/        # Viteカスタム起動スクリプト
 public/       # 静的ファイル（dist/にコピー）
@@ -47,6 +50,9 @@ dist/         # 納品物
 
 - `.claude/rules/general.md` — 全般ルール
 - `.claude/rules/ejs-templates.md` — EJSテンプレートルール
+- `.claude/rules/js-modules.md` — JSモジュール設計ルール
 - `.claude/rules/compressOutputToken.md` — 出力トークン圧縮
 - `.claude/minutes/2026-05-04_ejs-vite-lp-review.md` — レビュー議事録
+- `.claude/minutes/2026-05-07_js-design-review.md` — JS設計レビュー議事録
 - `.claude/prompt/refactor-ejs-vite-lp.md` — Phase 1〜4 実装プロンプト
+- `.claude/prompt/refactor-js-design.md` — Phase A〜D 実装プロンプト
