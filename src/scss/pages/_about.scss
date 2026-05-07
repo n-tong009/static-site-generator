@@ -1,0 +1,9 @@
+@use 'sass:math';
+@use '../common/config' as *;
+
+.page-about {
+  @include RESPONSIVE('PC', $MIN_WIDTH) {
+  }
+  @include RESPONSIVE('SP', $MIN_WIDTH) {
+  }
+}
