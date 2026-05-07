@@ -1,0 +1,19 @@
+@use 'sass:math';
+@use '../functions/viewport';
+
+@mixin fontSize_per($size, $base: 16) {
+  font-size: math.percentage(math.div($size, $base));
+}
+
+@mixin fontSize_vw($base: 16) {
+  font-size: math.div($base, 2) + px;
+  font-size: viewport.vw($base);
+}
+
+@mixin lineHeight($size: 32, $base: 16) {
+  line-height: math.div($size, $base);
+}
+
+@mixin letterSpacing($size: 80) {
+  letter-spacing: math.div($size, 1000) + em;
+}

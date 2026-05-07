@@ -1,0 +1,5 @@
+@use 'sass:math';
+
+@function vw($size, $viewport: 750) {
+  @return math.div($size, $viewport) * 100 + vw;
+}

@@ -1,0 +1,22 @@
+// ブレイクポイント
+$MIN_WIDTH: 768px;
+$MAX_WIDTH: 1280px;
+
+// カラー
+$COLOR_BASE: #fff;
+$COLOR_TEXT: #333;
+$COLOR_LINK: $COLOR_TEXT;
+$COLOR_PRIMARY: #3498db;
+$COLOR_SECONDARY: #2ecc71;
+$COLOR_HEADER_BG: #2c3e50;
+$COLOR_FOOTER_BG: #34495e;
+
+// タイポグラフィ
+$FONT_FAMILY: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo, sans-serif;
+$FONT_SIZE: 16px;
+$LINE_HEIGHT: 1.6;
+
+// z-index
+$Z_HEADER: 100;
+$Z_MODAL: 200;
+$Z_OVERLAY: 190;
