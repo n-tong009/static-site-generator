@@ -21,7 +21,20 @@ const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href
 const ogImageURL = new URL(ogImage, SITE_CONFIG.url).href
 
 function renderPreloadAttr(name, value) {
-  return `${name}="${value}"`
+  return `${name}="${escapeAttr(value)}"`
+}
+
+function escapeAttr(value) {
+  const replacements = {
+    '&': '&amp;',
+    '"': '&quot;',
+    "'": '&#39;',
+    '<': '&lt;',
+  }
+
+  return String(value).replace(/[&"'<]/g, function (char) {
+    return replacements[char]
+  })
 }
 
 function renderPreloadLink(item) {
