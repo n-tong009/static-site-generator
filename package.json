@@ -14,6 +14,7 @@
     "build:prod": "BUILD_ENV=production NODE_ENV=production node scripts/build.js",
     "preview": "vite preview --outDir dist",
     "verify": "node scripts/verify-build.js",
+    "new-page": "node scripts/new-page.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
