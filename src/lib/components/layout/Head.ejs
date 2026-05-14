@@ -16,13 +16,22 @@ const {
 // STG 環境はデフォルト noindex。frontmatter で明示的に noindex: false を指定すれば上書き可
 const noindex = _noindexLocal !== undefined ? _noindexLocal : getCurrentEnv() === 'STG'
 
-// URLパスの生成
-const canonicalURL = new URL(pagePath, SITE_CONFIG.url).href
-const ogImageURL = new URL(ogImage, SITE_CONFIG.url).href
-
 function renderPreloadAttr(name, value) {
   return `${name}="${escapeAttr(value)}"`
 }
+
+function resolveSiteUrl(value) {
+  if (!value) return SITE_CONFIG.url
+  if (/^[a-z][a-z\d+.-]*:/i.test(value)) return value
+
+  const base = SITE_CONFIG.url.endsWith('/') ? SITE_CONFIG.url : `${SITE_CONFIG.url}/`
+  const relative = String(value).replace(/^\/+/, '')
+  return new URL(relative, base).href
+}
+
+// URLパスの生成
+const canonicalURL = resolveSiteUrl(pagePath)
+const ogImageURL = resolveSiteUrl(ogImage)
 
 function escapeAttr(value) {
   const replacements = {

@@ -31,7 +31,7 @@ export function getCurrentEnv() {
 export const SITE_URL = {
   DEV: 'http://localhost:3000/',
   STG: 'https://stg.example.com/',
-  PROD: 'https://example.com/'
+  PROD: 'https://n-tong009.github.io/static-site-generator/'
 }
 
 /**
@@ -52,7 +52,7 @@ export const BASE_URL = {
 export const ASSETS_URL = {
   DEV: '/',
   STG: '', // 例: 'https://stg-cdn.example.com/'
-  PROD: '' // 例: 'https://cdn.example.com/'
+  PROD: '/static-site-generator/' // 例: 'https://cdn.example.com/'
 }
 
 /**
@@ -86,13 +86,13 @@ export const getCurrentAssetsUrl = () => ASSETS_URL[getCurrentEnv()] || '/'
  * @type {{ name: string; title: string; description: string; url: string; author: string; locale: string; defaultLocale: string }}
  */
 export const SITE_CONFIG = {
-  name: 'LP Builder',
-  title: 'LP Builder',
-  description: 'EJS×Vite LP納品テンプレート',
+  name: 'Mori Coffee',
+  title: 'Mori Coffee',
+  description: '代々木公園近くにオープンする自家焙煎コーヒーと焼き菓子のカフェ',
   get url() {
     return getCurrentSiteUrl()
   },
-  author: '',
+  author: 'Mori Coffee',
   locale: 'ja_JP',
   defaultLocale: 'ja'
 }

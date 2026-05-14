@@ -2,13 +2,22 @@
 const _type = typeof structuredType !== 'undefined' ? structuredType : 'Organization'
 let _jsonld = null
 
+function resolveSiteUrl(value) {
+  if (!value) return SITE_CONFIG.url
+  if (/^[a-z][a-z\d+.-]*:/i.test(value)) return value
+
+  const base = SITE_CONFIG.url.endsWith('/') ? SITE_CONFIG.url : `${SITE_CONFIG.url}/`
+  const relative = String(value).replace(/^\/+/, '')
+  return new URL(relative, base).href
+}
+
 if (_type === 'Organization') {
   _jsonld = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: data.site.companyName,
     url: SITE_CONFIG.url,
-    logo: new URL('/images/og.jpg', SITE_CONFIG.url).href,
+    logo: resolveSiteUrl('/images/og.jpg'),
   }
   if (data.site.tel) _jsonld.telephone = data.site.tel
   if (data.site.email) _jsonld.email = data.site.email
