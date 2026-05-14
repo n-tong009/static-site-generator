@@ -1,20 +1,21 @@
 <%
 // Header.ejs
-const { pagePath } = locals
-function isActive(path) {
-  return pagePath === path ? 'active' : ''
-}
+const instagramUrl = data.site?.sns?.instagram || 'https://www.instagram.com/'
+const homeUrl = url('/')
 %>
-<header id="section-header">
+<header id="section-header" class="site-header">
   <div class="container">
     <p class="site-logo">
-      <a href="<%= url('/') %>"><%- SITE_CONFIG.name %></a>
+      <a href="<%= homeUrl %>"><%- SITE_CONFIG.name %></a>
     </p>
-    <nav class="site-nav">
+    <nav class="site-nav" aria-label="Mori Coffee site navigation">
       <ul>
-        <li><a href="<%= url('/') %>" class="<%- isActive('/') %>">トップページ</a></li>
-        <li><a href="<%= url('/about.html') %>" class="<%- isActive('/about.html') %>">このプロジェクトについて</a></li>
+        <li><a href="<%= homeUrl %>#concept">Concept</a></li>
+        <li><a href="<%= homeUrl %>#menu">Menu</a></li>
+        <li><a href="<%= homeUrl %>#space">Space</a></li>
+        <li><a href="<%= homeUrl %>#access">Access</a></li>
       </ul>
     </nav>
+    <a class="site-header__cta" href="<%= instagramUrl %>" target="_blank" rel="noopener noreferrer">Instagram</a>
   </div>
 </header>

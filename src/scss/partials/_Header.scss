@@ -1,20 +1,28 @@
-@use 'sass:math';
+@use 'sass:color';
 @use '../common/config' as *;
 
 #section-header {
-  background-color: $COLOR_HEADER_BG;
+  position: sticky;
+  z-index: $Z_HEADER;
+  top: 0;
+  background-color: #173c2c;
   color: white;
-  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    min-height: 72px;
+    gap: 1.5rem;
   }
 
   .site-logo {
     margin: 0;
-    font-size: 1.5rem;
+    flex: 0 0 auto;
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1;
 
     a {
       color: white;
@@ -27,50 +35,85 @@
   }
 
   .site-nav {
+    flex: 1 1 auto;
+
     ul {
       display: flex;
+      justify-content: center;
+      gap: 0.25rem;
       list-style: none;
       margin: 0;
       padding: 0;
 
       li {
-        margin-left: 1.5rem;
-
         a {
-          color: white;
+          display: inline-flex;
+          min-height: 40px;
+          align-items: center;
+          color: rgba(255, 255, 255, 0.82);
           text-decoration: none;
-          padding: 0.5rem;
+          padding: 0.5rem 0.875rem;
           border-radius: 4px;
-          transition: background-color 0.3s;
+          font-size: 0.9375rem;
+          font-weight: 700;
+          transition:
+            background-color 0.2s ease,
+            color 0.2s ease;
 
           &:hover {
             background-color: rgba(255, 255, 255, 0.1);
-          }
-
-          &.active {
-            background-color: rgba(255, 255, 255, 0.2);
-            font-weight: bold;
+            color: white;
           }
         }
       }
     }
   }
 
+  .site-header__cta {
+    display: inline-flex;
+    flex: 0 0 auto;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 4px;
+    color: white;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.46);
+    }
+  }
+
   @include RESPONSIVE('SP', $MIN_WIDTH) {
     .container {
-      flex-direction: column;
-      align-items: flex-start;
+      min-height: auto;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
     }
 
     .site-nav {
-      margin-top: 1rem;
+      order: 3;
       width: 100%;
 
       ul {
         flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 0.25rem 0.5rem;
 
-        li {
-          margin: 0.5rem 1rem 0.5rem 0;
+        li a {
+          min-height: 36px;
+          padding: 0.375rem 0.625rem;
         }
       }
     }

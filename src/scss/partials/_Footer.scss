@@ -2,43 +2,56 @@
 @use '../common/config' as *;
 
 #section-footer {
-  background-color: $COLOR_FOOTER_BG;
+  background-color: #222724;
   color: white;
-  padding: 2rem 0;
+  padding: 2.5rem 0;
 
   .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) auto auto;
+    gap: 1.5rem 2rem;
     align-items: center;
   }
 
+  .footer-brand {
+    p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.9375rem;
+    }
+  }
+
+  .footer-logo {
+    margin-bottom: 0.35rem !important;
+    color: white !important;
+    font-size: 1.25rem !important;
+    font-weight: 700;
+  }
+
   .copyright {
+    grid-column: 1 / -1;
     margin: 0;
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 0.8125rem;
   }
 
   .footer-nav {
     ul {
       display: flex;
+      flex-wrap: wrap;
+      gap: 0.875rem 1.25rem;
       list-style: none;
       margin: 0;
       padding: 0;
 
-      li {
-        margin-right: 1.5rem;
+      a {
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.9375rem;
+        font-weight: 700;
+        text-decoration: none;
 
-        &:last-child {
-          margin-right: 0;
-        }
-
-        a {
-          color: rgba(255, 255, 255, 0.8);
-          text-decoration: none;
-
-          &:hover {
-            color: white;
-            text-decoration: underline;
-          }
+        &:hover {
+          color: white;
         }
       }
     }
@@ -51,10 +64,12 @@
     .social-link {
       color: white;
       text-decoration: none;
-      padding: 0.5rem;
+      padding: 0.625rem 1rem;
       border-radius: 4px;
       background-color: rgba(255, 255, 255, 0.1);
-      transition: background-color 0.3s;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      transition: background-color 0.2s ease;
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.2);
@@ -64,9 +79,13 @@
 
   @include RESPONSIVE('SP', $MIN_WIDTH) {
     .container {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       align-items: flex-start;
       gap: 1rem;
+    }
+
+    .copyright {
+      grid-column: auto;
     }
   }
 }

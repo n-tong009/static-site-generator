@@ -1,23 +1,29 @@
 <%
 // Footer.ejs
 const currentYear = new Date().getFullYear()
+const cafe = data.site || {}
+const instagramUrl = cafe.sns?.instagram || 'https://www.instagram.com/'
 %>
 <footer id="section-footer">
   <div class="container">
-    <p class="copyright">&copy; <%= currentYear %> <%= SITE_CONFIG.name %></p>
+    <div class="footer-brand">
+      <p class="footer-logo"><%= SITE_CONFIG.name %></p>
+      <p><%= cafe.address || '東京都渋谷区富ヶ谷1-12-8' %></p>
+    </div>
 
     <nav class="footer-nav">
       <ul>
-        <li><a href="<%= url('/') %>">トップページ</a></li>
-        <li><a href="<%= url('/about.html') %>">このプロジェクトについて</a></li>
+        <li><a href="<%= url('/') %>#concept">Concept</a></li>
+        <li><a href="<%= url('/') %>#menu">Menu</a></li>
+        <li><a href="<%= url('/') %>#space">Space</a></li>
+        <li><a href="<%= url('/') %>#access">Access</a></li>
       </ul>
     </nav>
 
     <div class="social-links">
-      <% for (const [key, socialUrl] of Object.entries(SOCIAL_LINKS)) { %> <% if (socialUrl) { %>
-      <a href="<%= socialUrl %>" target="_blank" rel="noopener noreferrer" class="social-link <%= key %>"><%= key %></a>
-      <% } %>
-      <% } %>
+      <a href="<%= instagramUrl %>" target="_blank" rel="noopener noreferrer" class="social-link instagram">Instagram</a>
     </div>
+
+    <p class="copyright">&copy; <%= currentYear %> <%= SITE_CONFIG.name %></p>
   </div>
 </footer>
