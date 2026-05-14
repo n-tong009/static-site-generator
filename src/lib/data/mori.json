@@ -1,0 +1,56 @@
+{
+  "links": {
+    "map": "https://www.google.com/maps/search/?api=1&query=Mori%20Coffee%20Yoyogi%20Park",
+    "instagram": "https://www.instagram.com/"
+  },
+  "menuItems": [
+    {
+      "name": "Mori Blend",
+      "price": "650 yen",
+      "image": "532x300_green.png",
+      "alt": "深いグリーンを基調にしたMori Blendのイメージ",
+      "text": "ナッツの余韻とやわらかな甘みを感じる、毎日飲みたい自家焙煎ブレンド。"
+    },
+    {
+      "name": "Forest Latte",
+      "price": "720 yen",
+      "image": "532x300_white.png",
+      "alt": "白を基調にしたForest Latteのイメージ",
+      "text": "きめ細かなミルクと浅煎りエスプレッソを合わせた、軽やかな一杯。"
+    },
+    {
+      "name": "Maple Scone",
+      "price": "420 yen",
+      "image": "532x300_WoodBrown.png",
+      "alt": "木材ブラウンを基調にしたMaple Sconeのイメージ",
+      "text": "店内で焼き上げる、外はさっくり中はしっとりのメープルスコーン。"
+    },
+    {
+      "name": "Morning Toast Set",
+      "price": "980 yen",
+      "image": "532x300_charcoal.png",
+      "alt": "チャコールを基調にしたMorning Toast Setのイメージ",
+      "text": "厚切りトースト、季節のジャム、ドリップコーヒーの朝限定セット。"
+    }
+  ],
+  "spaceItems": [
+    {
+      "label": "Morning",
+      "title": "出勤前に、静かな一杯を。",
+      "image": "532x300_white.png",
+      "alt": "朝のMori Coffeeの席を想起させる明るいイメージ"
+    },
+    {
+      "label": "Work",
+      "title": "窓際席で、考えごとが進む時間を。",
+      "image": "532x300_green.png",
+      "alt": "緑を感じる窓際席のイメージ"
+    },
+    {
+      "label": "Weekend",
+      "title": "焼き菓子と会話をゆっくり楽しむ午後。",
+      "image": "532x300_WoodBrown.png",
+      "alt": "木の温もりを感じる週末のカフェ時間のイメージ"
+    }
+  ]
+}

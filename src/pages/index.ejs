@@ -1,12 +1,174 @@
 ---
-title: 'トップページ'
-description: 'LP納品テンプレートのトップページ'
+title: 'Mori Coffee'
+description: '代々木公園近くにオープンするMori Coffeeの新店舗ランディングページ'
 layout: 'DefaultLayout'
 pageId: 'index'
+ogImage: '/images/1820x1024.png'
 ---
 
-<%- render('HeroSection', { hero: data.sections.hero }) %>
-<%- render('FeaturesSection', { features: data.sections.features }) %>
-<%- render('TestimonialsSection', { testimonials: data.testimonials }) %>
-<%- render('FaqSection', { faq: data.faq }) %>
-<%- render('CtaSection', { cta: data.sections.ctaSection }) %>
+<section class="mori-hero" id="hero" aria-label="Mori Coffee new open">
+  <img
+    class="mori-hero__image"
+    src="<%= url('/images/1820x1024.png') %>"
+    alt="Mori Coffeeの新店舗をイメージしたメインビジュアル"
+    width="1820"
+    height="1024"
+    fetchpriority="high"
+  />
+  <div class="mori-hero__shade" aria-hidden="true"></div>
+
+  <div class="mori-lp-container mori-hero__content">
+    <p class="mori-hero__date">2026.06.15 New Open</p>
+    <h1>Mori Coffee</h1>
+    <p class="mori-hero__lead">森の余白を、街角に。</p>
+    <p class="mori-hero__text">代々木公園のそばに生まれる、自家焙煎コーヒーと焼きたてスコーンの小さなカフェ。</p>
+
+    <div class="mori-actions" aria-label="主要リンク">
+      <a class="mori-button mori-button--primary" href="<%= data.mori.links.map %>" target="_blank" rel="noopener noreferrer">Google Mapで見る</a>
+      <a class="mori-button mori-button--ghost" href="<%= data.mori.links.instagram %>" target="_blank" rel="noopener noreferrer">Instagramを見る</a>
+    </div>
+
+    <dl class="mori-hero__info">
+      <div>
+        <dt>Open</dt>
+        <dd>8:00 - 19:00</dd>
+      </div>
+      <div>
+        <dt>Access</dt>
+        <dd>代々木公園駅 徒歩4分</dd>
+      </div>
+      <div>
+        <dt>Opening Week</dt>
+        <dd>Drip Coffee 100 yen off</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section class="mori-section mori-concept" id="concept">
+  <div class="mori-lp-container mori-concept__grid">
+    <div class="mori-section__body">
+      <p class="mori-section__eyebrow">Concept</p>
+      <h2>忙しい日常の中で、深呼吸できる一杯を。</h2>
+      <p>Mori Coffeeは、森の中にある余白のような時間を街角に届けるカフェです。豆は毎朝少量ずつ挽き、焼き菓子はその日の空気に合わせて店内で仕上げます。</p>
+
+      <div class="mori-concept__points">
+        <p>自家焙煎ブレンド</p>
+        <p>焼きたてスコーン</p>
+        <p>木の温もりある静かな空間</p>
+      </div>
+    </div>
+
+    <figure class="mori-concept__visual">
+      <img
+        src="<%= url('/images/532x300_green.png') %>"
+        alt="木材の温もりを感じるMori Coffeeのコンセプトイメージ"
+        width="532"
+        height="300"
+        loading="lazy"
+      />
+      <figcaption>毎日丁寧にじっくりと焙煎したコーヒーをお出し致します。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="mori-section mori-menu" id="menu">
+  <div class="mori-lp-container">
+    <div class="mori-section__head">
+      <p class="mori-section__eyebrow">Menu</p>
+      <h2>看板メニュー</h2>
+      <p>朝の一杯から午後の甘い休憩まで、オープンから楽しめる定番を揃えました。</p>
+    </div>
+
+    <div class="mori-menu__grid">
+      <% data.mori.menuItems.forEach(function (item) { %>
+      <article class="mori-menu-card">
+        <img src="<%= url('/images/' + item.image) %>" alt="<%= item.alt %>" width="532" height="300" loading="lazy" />
+        <div class="mori-menu-card__body">
+          <div class="mori-menu-card__title">
+            <h3><%= item.name %></h3>
+            <p><%= item.price %></p>
+          </div>
+          <p><%= item.text %></p>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mori-section mori-space" id="space">
+  <div class="mori-lp-container">
+    <div class="mori-section__head mori-section__head--light">
+      <p class="mori-section__eyebrow">Space</p>
+      <h2>過ごし方で選べる、3つの席。</h2>
+      <p>ひとりでも、誰かとでも。短い休憩にも、ゆっくり過ごす午後にも。</p>
+    </div>
+
+    <div class="mori-space__grid">
+      <% data.mori.spaceItems.forEach(function (item) { %>
+      <article class="mori-space-card">
+        <img src="<%= url('/images/' + item.image) %>" alt="<%= item.alt %>" width="532" height="300" loading="lazy" />
+        <div class="mori-space-card__body">
+          <p><%= item.label %></p>
+          <h3><%= item.title %></h3>
+        </div>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="mori-section mori-access" id="access">
+  <div class="mori-lp-container mori-access__grid">
+    <div class="mori-section__body">
+      <p class="mori-section__eyebrow">Access</p>
+      <h2>歩いて4分。<br>代々木公園の緑より</h2>
+      <p>公園帰りにも、出勤前にも立ち寄りやすい小さな路面店です。</p>
+
+      <dl class="mori-access__list">
+        <div>
+          <dt>Address</dt>
+          <dd>東京都渋谷区富ヶ谷1-12-8</dd>
+        </div>
+        <div>
+          <dt>Station</dt>
+          <dd>東京メトロ千代田線 代々木公園駅 徒歩4分</dd>
+        </div>
+        <div>
+          <dt>Hours</dt>
+          <dd>8:00 - 19:00 / Tuesday Closed</dd>
+        </div>
+      </dl>
+
+      <a class="mori-button mori-button--primary" href="<%= data.mori.links.map %>" target="_blank" rel="noopener noreferrer">Google Mapで開く</a>
+    </div>
+
+    <figure class="mori-access__map">
+      <img
+        src="<%= url('/images/532x300_charcoal.png') %>"
+        alt="Mori Coffee周辺の地図を想起させるチャコールカラーのイメージ"
+        width="532"
+        height="300"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+</section>
+
+<section class="mori-cta" id="cta">
+  <img
+    class="mori-cta__image"
+    src="<%= url('/images/1820x1024.png') %>"
+    alt="Mori Coffeeで過ごす時間を想起させる背景イメージ"
+    width="1820"
+    height="1024"
+    loading="lazy"
+  />
+  <div class="mori-cta__shade" aria-hidden="true"></div>
+  <div class="mori-lp-container mori-cta__content">
+    <p>2026.06.15 New Open</p>
+    <h2>6月15日<br>Mori Coffeeでお待ちしています。</h2>
+    <a class="mori-button mori-button--primary" href="<%= data.mori.links.instagram %>" target="_blank" rel="noopener noreferrer">Instagramで最新情報を見る</a>
+  </div>
+</section>
