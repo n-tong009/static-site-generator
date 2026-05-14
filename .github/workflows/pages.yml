@@ -1,46 +1,79 @@
+# GitHub Pages へ本番ビルドをデプロイするワークフロー
 name: Deploy GitHub Pages
 
 on:
+  # gh-pages ブランチに push されたときに自動実行する
   push:
     branches:
       - gh-pages
+
+  # GitHub Actions の画面から手動実行できるようにする
   workflow_dispatch:
 
+# GitHub Pages へのデプロイに必要な最小権限を設定する
 permissions:
+  # リポジトリの内容を読み取るために必要
   contents: read
-  pages: write
-  id-token: write
 
+# Pages デプロイが同時に複数走らないように制御する
 concurrency:
   group: pages
+
+  # 実行中のデプロイはキャンセルせず、順番に完了させる
   cancel-in-progress: false
 
 jobs:
+  # アプリケーションをビルドし、GitHub Pages 用の成果物を作成する
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      # リポジトリのソースコードを取得する
+      - uses: actions/checkout@v5
+
+      # pnpm を利用できるようにセットアップする
+      - uses: pnpm/action-setup@v6
+
+      # Node.js をセットアップし、pnpm のキャッシュを有効化する
+      - uses: actions/setup-node@v5
         with:
-          version: 10
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+          node-version: '24'
           cache: 'pnpm'
+
+      # GitHub Pages 用の設定を初期化する
       - uses: actions/configure-pages@v5
-      - run: pnpm install --frozen-lockfile
+
+      # lockfile に従って依存関係をインストールする
+      # lockfile と package.json に差分がある場合は失敗する
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+
+      # 本番用のビルドを実行する
       - run: pnpm build:prod
+
+      # ビルド結果が PROD 環境として正しいか検証する
       - run: EXPECTED_ENV=PROD pnpm verify
+
+      # GitHub Pages にデプロイする成果物をアップロードする
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 
+  # build ジョブで作成した成果物を GitHub Pages にデプロイする
   deploy:
     needs: build
     runs-on: ubuntu-latest
+
+    # GitHub Pages へのデプロイに必要な権限だけをdeploy jobへ付与する
+    permissions:
+      pages: write
+      id-token: write
+
+    # GitHub Pages のデプロイ先環境を指定する
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
+      # アップロード済みの Pages artifact を GitHub Pages にデプロイする
       - id: deployment
         uses: actions/deploy-pages@v4

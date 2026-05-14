@@ -1,21 +1,50 @@
+# Pull Request 作成時に、STG/PROD の両方でビルドできるか確認するワークフロー
 name: Build Check
-on: [pull_request]
+
+on:
+  # Pull Request 作成・更新時に実行する
+  pull_request:
+
 jobs:
+  # アプリケーションのビルドと成果物の検証を行う
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 10 }
-      - uses: actions/setup-node@v4
+      # リポジトリのソースコードを取得する
+      - uses: actions/checkout@v5
         with:
-          node-version: '20'
+          fetch-depth: 0
+
+      # pnpm を利用できるようにセットアップする
+      - uses: pnpm/action-setup@v6
+
+      # Node.js をセットアップし、pnpm のキャッシュを有効化する
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
           cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
+
+      # セキュリティ上重要なファイルの差分を検出する
+      - run: pnpm security:diff "${{ github.event.pull_request.base.sha }}"
+
+      # lockfile に従って依存関係をインストールする
+      # lockfile と package.json に差分がある場合は失敗する
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+
+      # STG 環境向けのビルドを実行する
       - run: pnpm build:stg
+
+      # ビルド結果が STG 環境として正しいか検証する
       - run: EXPECTED_ENV=STG pnpm verify
+
+      # PROD 環境向けのビルドを実行する
       - run: pnpm build:prod
+
+      # ビルド結果が PROD 環境として正しいか検証する
       - run: EXPECTED_ENV=PROD pnpm verify
+
+      # GitHub Pages に必要な主要ファイルが生成されているか確認する
       - name: Verify dist files
         run: |
           test -f dist/index.html
