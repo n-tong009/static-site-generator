@@ -19,7 +19,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify:js": "node -e \"import('./src/scripts/pages/_index.js').then(m => console.log('pages exports:', Object.keys(m)))\""
+    "verify:js": "node -e \"import('./src/scripts/pages/_index.js').then(m => console.log('pages exports:', Object.keys(m)))\"",
+    "security:diff": "bash scripts/security/check-sensitive-diff.sh"
   },
   "dependencies": {
     "chalk": "^5.6.2",

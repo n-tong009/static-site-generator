@@ -59,6 +59,14 @@ EXPECTED_ENV=PROD pnpm verify
 pnpm preview
 ```
 
+## セキュリティ運用
+
+- ホストPCで `npm install` / `pnpm install` / `yarn install` を実行しない
+- 依存インストールはdevコンテナ内で明示的に実行する
+- `.github`、`.vscode`、`.claude`、`package.json`、lockfileの変更は人間レビュー必須
+- production credential、npm publish token、AWS本番キー、Tauri署名secretはdevコンテナへ渡さない
+- 危険差分の確認には `pnpm security:diff [BASE_REF]` を使用する
+
 ## コマンド一覧
 
 | コマンド                        | 用途                                        |
@@ -76,6 +84,7 @@ pnpm preview
 | `pnpm format`                   | Prettier整形                                |
 | `pnpm format:check`             | Prettierチェック                            |
 | `pnpm verify:js`                | ページ別JS exportの疎通確認                 |
+| `pnpm security:diff [BASE_REF]` | 危険差分の確認                              |
 
 ## ビルド出力の仕様
 
