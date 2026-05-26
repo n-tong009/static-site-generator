@@ -59,3 +59,9 @@ yarn-error.log*
 AGENTS.md
 .codex
 .agents
+
+# dev container
+.devcontainer/
+
+# docs
+docs/
