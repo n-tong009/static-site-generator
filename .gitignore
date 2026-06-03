@@ -52,8 +52,11 @@ yarn-error.log*
 # serena
 .serena
 
-# claude
-.claude
+# claude（rules/ の設計規約のみ公開、他はローカル私的）
+.claude/*
+!.claude/rules/
+.claude/rules/compressOutputToken.md
+CLAUDE.local.md
 
 # codex
 AGENTS.md
@@ -65,3 +68,6 @@ AGENTS.md
 
 # docs
 docs/
+
+# pnpm
+.pnpm-store

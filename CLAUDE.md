@@ -12,9 +12,12 @@ EJS × Vite 単発LP納品テンプレ。Astro的なレイアウト・パーシ�
 ## 主要コマンド
 
 ```bash
-pnpm dev      # 開発サーバー
-pnpm build    # 本番ビルド → dist/
-pnpm preview  # dist/ の静的プレビュー
+pnpm dev              # 開発サーバー
+pnpm build            # 本番ビルド → dist/
+pnpm preview          # dist/ の静的プレビュー
+pnpm verify           # ビルド成果物の検証
+pnpm new-page <name>  # ページ雛形生成（EJS/SCSS 並走）
+pnpm lint             # ESLint
 ```
 
 ## ディレクトリ概要
@@ -24,7 +27,10 @@ src/
   layouts/    # HTML骨格
   pages/      # ページ（frontmatter + コンテンツ）
   partials/   # 再利用部品
-  lib/        # 定数・テンプレプロセッサ
+  lib/        # ヘルパー・データ
+    utils/    # constants / templateProcessor / url
+    data/     # サイト・セクション・FAQ 等の JSON
+    components/
   scripts/    # クライアントJS
     shared/   # 共通utility・副作用entry
     pages/    # ページ別処理（pageId 1対1）
@@ -35,24 +41,9 @@ public/       # 静的ファイル（dist/にコピー）
 dist/         # 納品物
 ```
 
-## 既知の未解決事項
-
-| 問題                                                 | 状態               |
-| ---------------------------------------------------- | ------------------ |
-| `src/lib/sentry.js` 不存在 → `pnpm dev` 即死         | Phase 1 で除去予定 |
-| `vite.config.js` 圧縮無効化・ハッシュ削除設定なし    | Phase 1 で修正予定 |
-| `pageTransitionEffect()` が全 `<a>` タグを intercept | Phase 2 で削除予定 |
-| `alert('ボタンがクリックされました！')` 残存         | Phase 2 で削除予定 |
-
-詳細な実行手順 → `.claude/prompt/refactor-ejs-vite-lp.md`
-
 ## 関連ドキュメント
 
 - `.claude/rules/general.md` — 全般ルール
 - `.claude/rules/ejs-templates.md` — EJSテンプレートルール
 - `.claude/rules/js-modules.md` — JSモジュール設計ルール
-- `.claude/rules/compressOutputToken.md` — 出力トークン圧縮
-- `.claude/minutes/2026-05-04_ejs-vite-lp-review.md` — レビュー議事録
-- `.claude/minutes/2026-05-07_js-design-review.md` — JS設計レビュー議事録
-- `.claude/prompt/refactor-ejs-vite-lp.md` — Phase 1〜4 実装プロンプト
-- `.claude/prompt/refactor-js-design.md` — Phase A〜D 実装プロンプト
+- `.claude/rules/scss.md` — SCSS設計規約

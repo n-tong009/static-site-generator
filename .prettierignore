@@ -13,3 +13,6 @@ pnpm-lock.yaml
 
 # 静的アセット
 /public/
+
+# pnpm
+.pnpm-store
