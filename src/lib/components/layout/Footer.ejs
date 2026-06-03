@@ -1,22 +1,26 @@
 <%
 // Footer.ejs
 const currentYear = new Date().getFullYear()
-const cafe = data.site || {}
-const instagramUrl = cafe.sns?.instagram || 'https://www.instagram.com/'
+const salon = data.site || {}
+const instagramUrl = salon.sns?.instagram || 'https://www.instagram.com/'
 %>
 <footer id="section-footer">
   <div class="container">
     <div class="footer-brand">
       <p class="footer-logo"><%= SITE_CONFIG.name %></p>
-      <p><%= cafe.address || '東京都渋谷区富ヶ谷1-12-8' %></p>
+      <p><%= salon.address || '' %></p>
+      <% if (salon.businessHours) { %>
+      <p>営業時間: <%= salon.businessHours %></p>
+      <% } %>
     </div>
 
-    <nav class="footer-nav">
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
       <ul>
-        <li><a href="<%= url('/') %>#concept">Concept</a></li>
-        <li><a href="<%= url('/') %>#menu">Menu</a></li>
-        <li><a href="<%= url('/') %>#space">Space</a></li>
-        <li><a href="<%= url('/') %>#access">Access</a></li>
+        <li><a href="<%= url('/') %>#concerns">お悩み</a></li>
+        <li><a href="<%= url('/') %>#approach">アプローチ</a></li>
+        <li><a href="<%= url('/') %>#space">空間</a></li>
+        <li><a href="<%= url('/') %>#pricing">料金</a></li>
+        <li><a href="<%= url('/') %>#faq">FAQ</a></li>
       </ul>
     </nav>
 

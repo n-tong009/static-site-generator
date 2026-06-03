@@ -1,6 +1,5 @@
 <%
 // Header.ejs
-const instagramUrl = data.site?.sns?.instagram || 'https://www.instagram.com/'
 const homeUrl = url('/')
 %>
 <header id="section-header" class="site-header">
@@ -8,14 +7,15 @@ const homeUrl = url('/')
     <p class="site-logo">
       <a href="<%= homeUrl %>"><%- SITE_CONFIG.name %></a>
     </p>
-    <nav class="site-nav" aria-label="Mori Coffee site navigation">
+    <nav class="site-nav" aria-label="サイト内ナビゲーション">
       <ul>
-        <li><a href="<%= homeUrl %>#concept">Concept</a></li>
-        <li><a href="<%= homeUrl %>#menu">Menu</a></li>
-        <li><a href="<%= homeUrl %>#space">Space</a></li>
-        <li><a href="<%= homeUrl %>#access">Access</a></li>
+        <li><a href="<%= homeUrl %>#concerns">お悩み</a></li>
+        <li><a href="<%= homeUrl %>#approach">アプローチ</a></li>
+        <li><a href="<%= homeUrl %>#space">空間</a></li>
+        <li><a href="<%= homeUrl %>#pricing">料金</a></li>
+        <li><a href="<%= homeUrl %>#faq">FAQ</a></li>
       </ul>
     </nav>
-    <a class="site-header__cta" href="<%= instagramUrl %>" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a class="site-header__cta" href="<%= homeUrl %>#pricing">予約する</a>
   </div>
 </header>

@@ -1,8 +1,11 @@
-// src/scripts/pages/index.js
-// body.dataset.page === 'index' のとき main.js から呼出される
+export default function index() {
+  const hero = document.querySelector('.lp-hero')
+  if (!hero) return
 
-/**
- * トップページ固有処理
- * @returns {void}
- */
-export default function index() {}
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      document.body.classList.toggle('is-cta-visible', !e.isIntersecting)
+    })
+  })
+  io.observe(hero)
+}

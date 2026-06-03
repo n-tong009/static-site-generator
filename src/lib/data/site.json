@@ -1,12 +1,15 @@
 {
-  "companyName": "Mori Coffee",
-  "companyNameEn": "Mori Coffee",
+  "companyName": "整体サロン Relax",
+  "companyNameEn": "Relax Seitai Salon",
   "tel": "03-0000-0000",
-  "email": "hello@mori-coffee.example",
-  "address": "東京都渋谷区富ヶ谷1-12-8",
+  "email": "info@relax-seitai.example",
+  "address": "東京都品川区西小山1-10-8",
+  "businessHours": "10:00 - 21:00（最終受付 20:00）",
+  "closedDays": "不定休",
   "sns": {
     "twitter": "",
     "instagram": "https://www.instagram.com/",
-    "facebook": ""
+    "facebook": "",
+    "line": "https://line.me/"
   }
 }

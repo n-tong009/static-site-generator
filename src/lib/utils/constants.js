@@ -86,13 +86,13 @@ export const getCurrentAssetsUrl = () => ASSETS_URL[getCurrentEnv()] || '/'
  * @type {{ name: string; title: string; description: string; url: string; author: string; locale: string; defaultLocale: string }}
  */
 export const SITE_CONFIG = {
-  name: 'Mori Coffee',
-  title: 'Mori Coffee',
-  description: '代々木公園近くにオープンする自家焙煎コーヒーと焼き菓子のカフェ',
+  name: '整体サロン Relax',
+  title: '整体サロン Relax',
+  description: 'デスクワーク疲れに寄り添う、やさしい整体サロン。初回お試し3,980円。',
   get url() {
     return getCurrentSiteUrl()
   },
-  author: 'Mori Coffee',
+  author: '整体サロン Relax',
   locale: 'ja_JP',
   defaultLocale: 'ja'
 }

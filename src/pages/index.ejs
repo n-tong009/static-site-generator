@@ -1,174 +1,183 @@
 ---
-title: 'Mori Coffee'
-description: '代々木公園近くにオープンするMori Coffeeの新店舗ランディングページ'
+title: '整体サロン Relax | 仕事終わりに、呼吸を戻す整体'
+description: 'デスクワーク疲れに寄り添う、やさしい整体サロン。初回お試し3,980円。肩こり・腰痛・睡眠の悩みをご相談ください。'
 layout: 'DefaultLayout'
 pageId: 'index'
-ogImage: '/images/1820x1024.png'
+ogImage: '/images/532x300_green.png'
 ---
 
-<section class="mori-hero" id="hero" aria-label="Mori Coffee new open">
-  <img
-    class="mori-hero__image"
-    src="<%= url('/images/1820x1024.png') %>"
-    alt="Mori Coffeeの新店舗をイメージしたメインビジュアル"
-    width="1820"
-    height="1024"
-    fetchpriority="high"
-  />
-  <div class="mori-hero__shade" aria-hidden="true"></div>
-
-  <div class="mori-lp-container mori-hero__content">
-    <p class="mori-hero__date">2026.06.15 New Open</p>
-    <h1>Mori Coffee</h1>
-    <p class="mori-hero__lead">森の余白を、街角に。</p>
-    <p class="mori-hero__text">代々木公園のそばに生まれる、自家焙煎コーヒーと焼きたてスコーンの小さなカフェ。</p>
-
-    <div class="mori-actions" aria-label="主要リンク">
-      <a class="mori-button mori-button--primary" href="<%= data.mori.links.map %>" target="_blank" rel="noopener noreferrer">Google Mapで見る</a>
-      <a class="mori-button mori-button--ghost" href="<%= data.mori.links.instagram %>" target="_blank" rel="noopener noreferrer">Instagramを見る</a>
+<section class="lp-hero" id="hero" aria-label="整体サロン Relax メインビジュアル">
+  <div class="lp-hero__inner">
+    <div class="lp-hero__content">
+      <p class="lp-hero__eyebrow"><%= data.seitai.hero.eyebrow %></p>
+      <h1 class="lp-hero__title">仕事終わりに、<br />呼吸を戻す整体</h1>
+      <p class="lp-hero__lead">デスクワークで固まった首・肩・腰に。<br />深い呼吸と、軽やかな毎日を取り戻す時間。</p>
+      <ul class="lp-hero__badges" role="list">
+        <% data.seitai.hero.badges.forEach(function (badge) { %>
+        <li class="lp-hero__badge"><%= badge %></li>
+        <% }) %>
+      </ul>
+      <div class="lp-hero__actions">
+        <a class="lp-btn lp-btn--line lp-btn--lg" href="#">
+          <%- render('icon/MessageCircle', { iconClass: 'lp-btn__icon' }) %>
+          <span class="lp-btn__label">
+            <span class="lp-btn__text"><%= data.seitai.hero.ctaText %></span>
+            <span class="lp-btn__sub"><%= data.seitai.hero.ctaSub %></span>
+          </span>
+        </a>
+      </div>
+      <p class="lp-hero__note"><%= data.seitai.hero.note %></p>
     </div>
+    <figure class="lp-hero__visual">
+      <img
+        src="<%= url('/images/' + data.seitai.hero.image) %>"
+        alt="<%= data.seitai.hero.imageAlt %>"
+        width="532"
+        height="300"
+        fetchpriority="high"
+      />
+    </figure>
+  </div>
+</section>
 
-    <dl class="mori-hero__info">
-      <div>
-        <dt>Open</dt>
-        <dd>8:00 - 19:00</dd>
+<section class="lp-concerns" id="concerns" aria-labelledby="concerns-title">
+  <div class="lp-container">
+    <div class="lp-section-head">
+      <h2 class="lp-section-head__title" id="concerns-title">こんなお悩み、ありませんか？</h2>
+    </div>
+    <ul class="lp-concerns__grid" role="list">
+      <% data.seitai.concerns.forEach(function (item) { %>
+      <li class="lp-concern-card">
+        <%- render('icon/' + item.icon, { iconClass: 'lp-concern-card__icon' }) %>
+        <p class="lp-concern-card__text"><%- item.text.replace(/\n/g, '<br>') %></p>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</section>
+
+<section class="lp-approach" id="approach" aria-labelledby="approach-title">
+  <div class="lp-container">
+    <div class="lp-section-head lp-section-head--light">
+      <p class="lp-section-head__eyebrow">Our Approach</p>
+      <h2 class="lp-section-head__title" id="approach-title">当院のアプローチ</h2>
+    </div>
+    <div class="lp-approach__grid">
+      <% data.seitai.approach.forEach(function (item, i) { %>
+      <article class="lp-approach-card">
+        <div class="lp-approach-card__head">
+          <span class="lp-approach-card__num"><%= String(i + 1).padStart(2, '0') %></span>
+          <%- render('icon/' + item.icon, { iconClass: 'lp-approach-card__icon' }) %>
+        </div>
+        <h3 class="lp-approach-card__title"><%= item.title %></h3>
+        <p class="lp-approach-card__text"><%= item.text %></p>
+      </article>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="lp-space" id="space" aria-labelledby="space-title">
+  <div class="lp-container">
+    <div class="lp-section-head">
+      <p class="lp-section-head__eyebrow">Space</p>
+      <h2 class="lp-section-head__title" id="space-title"><%= data.seitai.space.title %></h2>
+      <p class="lp-section-head__lead"><%= data.seitai.space.lead %></p>
+    </div>
+    <div class="lp-space__grid">
+      <% data.seitai.space.images.forEach(function (item) { %>
+      <figure class="lp-space__item">
+        <img
+          src="<%= url('/images/' + item.image) %>"
+          alt="<%= item.alt %>"
+          width="532"
+          height="300"
+          loading="lazy"
+        />
+      </figure>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="lp-pricing" id="pricing" aria-labelledby="pricing-title">
+  <div class="lp-container">
+    <div class="lp-pricing__inner">
+      <p class="lp-pricing__eyebrow"><%= data.seitai.pricing.eyebrow %></p>
+      <h2 class="lp-pricing__title" id="pricing-title"><%= data.seitai.pricing.label %></h2>
+      <p class="lp-pricing__sub"><%= data.seitai.pricing.sub %></p>
+      <div class="lp-pricing__box">
+        <p class="lp-pricing__regular">通常価格 <s><%= data.seitai.pricing.regular.toLocaleString() %>円</s></p>
+        <p class="lp-pricing__sale">
+          <span class="lp-pricing__amount"><%= data.seitai.pricing.sale.toLocaleString() %></span>
+          <span class="lp-pricing__unit">円<small>（税込）</small></span>
+        </p>
       </div>
-      <div>
-        <dt>Access</dt>
-        <dd>代々木公園駅 徒歩4分</dd>
+      <div class="lp-pricing__actions">
+        <a class="lp-btn lp-btn--line lp-btn--lg" href="#">
+          <%- render('icon/MessageCircle', { iconClass: 'lp-btn__icon' }) %>
+          <span class="lp-btn__label">
+            <span class="lp-btn__text"><%= data.seitai.pricing.ctaText %></span>
+            <span class="lp-btn__sub"><%= data.seitai.pricing.ctaSub %></span>
+          </span>
+        </a>
       </div>
-      <div>
-        <dt>Opening Week</dt>
-        <dd>Drip Coffee 100 yen off</dd>
+      <p class="lp-pricing__note"><%= data.seitai.pricing.ctaNote %></p>
+    </div>
+  </div>
+</section>
+
+<section class="lp-faq" id="faq" aria-labelledby="faq-title">
+  <div class="lp-container">
+    <div class="lp-section-head">
+      <h2 class="lp-section-head__title" id="faq-title">よくあるご質問</h2>
+    </div>
+    <dl class="lp-faq__list">
+      <% data.seitai.faq.forEach(function (item) { %>
+      <div class="lp-faq__item">
+        <details class="lp-faq__details">
+          <summary class="lp-faq__question">
+            <span class="lp-faq__q-label">Q</span>
+            <span class="lp-faq__q-text"><%= item.q %></span>
+            <%- render('icon/ChevronDown', { iconClass: 'lp-faq__chevron' }) %>
+          </summary>
+          <div class="lp-faq__answer">
+            <span class="lp-faq__a-label">A</span>
+            <p class="lp-faq__a-text"><%= item.a %></p>
+          </div>
+        </details>
       </div>
+      <% }) %>
     </dl>
   </div>
 </section>
 
-<section class="mori-section mori-concept" id="concept">
-  <div class="mori-lp-container mori-concept__grid">
-    <div class="mori-section__body">
-      <p class="mori-section__eyebrow">Concept</p>
-      <h2>忙しい日常の中で、深呼吸できる一杯を。</h2>
-      <p>Mori Coffeeは、森の中にある余白のような時間を街角に届けるカフェです。豆は毎朝少量ずつ挽き、焼き菓子はその日の空気に合わせて店内で仕上げます。</p>
-
-      <div class="mori-concept__points">
-        <p>自家焙煎ブレンド</p>
-        <p>焼きたてスコーン</p>
-        <p>木の温もりある静かな空間</p>
+<section class="lp-closing" id="closing" aria-labelledby="closing-title">
+  <div class="lp-container">
+    <div class="lp-closing__inner">
+      <h2 class="lp-closing__title" id="closing-title"><%= data.seitai.closing.title %></h2>
+      <p class="lp-closing__lead"><%= data.seitai.closing.lead %></p>
+      <div class="lp-closing__actions">
+        <a class="lp-btn lp-btn--line lp-btn--lg" href="#">
+          <%- render('icon/MessageCircle', { iconClass: 'lp-btn__icon' }) %>
+          <span class="lp-btn__label">
+            <span class="lp-btn__text"><%= data.seitai.closing.ctaText %></span>
+            <span class="lp-btn__sub"><%= data.seitai.closing.ctaSub %></span>
+          </span>
+        </a>
       </div>
-    </div>
-
-    <figure class="mori-concept__visual">
-      <img
-        src="<%= url('/images/532x300_green.png') %>"
-        alt="木材の温もりを感じるMori Coffeeのコンセプトイメージ"
-        width="532"
-        height="300"
-        loading="lazy"
-      />
-      <figcaption>毎日丁寧にじっくりと焙煎したコーヒーをお出し致します。</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="mori-section mori-menu" id="menu">
-  <div class="mori-lp-container">
-    <div class="mori-section__head">
-      <p class="mori-section__eyebrow">Menu</p>
-      <h2>看板メニュー</h2>
-      <p>朝の一杯から午後の甘い休憩まで、オープンから楽しめる定番を揃えました。</p>
-    </div>
-
-    <div class="mori-menu__grid">
-      <% data.mori.menuItems.forEach(function (item) { %>
-      <article class="mori-menu-card">
-        <img src="<%= url('/images/' + item.image) %>" alt="<%= item.alt %>" width="532" height="300" loading="lazy" />
-        <div class="mori-menu-card__body">
-          <div class="mori-menu-card__title">
-            <h3><%= item.name %></h3>
-            <p><%= item.price %></p>
-          </div>
-          <p><%= item.text %></p>
-        </div>
-      </article>
-      <% }) %>
+      <p class="lp-closing__note"><%= data.seitai.closing.ctaNote %></p>
     </div>
   </div>
 </section>
 
-<section class="mori-section mori-space" id="space">
-  <div class="mori-lp-container">
-    <div class="mori-section__head mori-section__head--light">
-      <p class="mori-section__eyebrow">Space</p>
-      <h2>過ごし方で選べる、3つの席。</h2>
-      <p>ひとりでも、誰かとでも。短い休憩にも、ゆっくり過ごす午後にも。</p>
-    </div>
-
-    <div class="mori-space__grid">
-      <% data.mori.spaceItems.forEach(function (item) { %>
-      <article class="mori-space-card">
-        <img src="<%= url('/images/' + item.image) %>" alt="<%= item.alt %>" width="532" height="300" loading="lazy" />
-        <div class="mori-space-card__body">
-          <p><%= item.label %></p>
-          <h3><%= item.title %></h3>
-        </div>
-      </article>
-      <% }) %>
-    </div>
+<aside class="lp-fixed-cta" aria-label="LINE予約">
+  <div class="lp-fixed-cta__text">
+    <p class="lp-fixed-cta__label"><%= data.seitai.fixedCta.label %></p>
+    <p class="lp-fixed-cta__note"><%= data.seitai.fixedCta.note %></p>
   </div>
-</section>
-
-<section class="mori-section mori-access" id="access">
-  <div class="mori-lp-container mori-access__grid">
-    <div class="mori-section__body">
-      <p class="mori-section__eyebrow">Access</p>
-      <h2>歩いて4分。<br>代々木公園の緑より</h2>
-      <p>公園帰りにも、出勤前にも立ち寄りやすい小さな路面店です。</p>
-
-      <dl class="mori-access__list">
-        <div>
-          <dt>Address</dt>
-          <dd>東京都渋谷区富ヶ谷1-12-8</dd>
-        </div>
-        <div>
-          <dt>Station</dt>
-          <dd>東京メトロ千代田線 代々木公園駅 徒歩4分</dd>
-        </div>
-        <div>
-          <dt>Hours</dt>
-          <dd>8:00 - 19:00 / Tuesday Closed</dd>
-        </div>
-      </dl>
-
-      <a class="mori-button mori-button--primary" href="<%= data.mori.links.map %>" target="_blank" rel="noopener noreferrer">Google Mapで開く</a>
-    </div>
-
-    <figure class="mori-access__map">
-      <img
-        src="<%= url('/images/532x300_charcoal.png') %>"
-        alt="Mori Coffee周辺の地図を想起させるチャコールカラーのイメージ"
-        width="532"
-        height="300"
-        loading="lazy"
-      />
-    </figure>
-  </div>
-</section>
-
-<section class="mori-cta" id="cta">
-  <img
-    class="mori-cta__image"
-    src="<%= url('/images/1820x1024.png') %>"
-    alt="Mori Coffeeで過ごす時間を想起させる背景イメージ"
-    width="1820"
-    height="1024"
-    loading="lazy"
-  />
-  <div class="mori-cta__shade" aria-hidden="true"></div>
-  <div class="mori-lp-container mori-cta__content">
-    <p>2026.06.15 New Open</p>
-    <h2>6月15日<br>Mori Coffeeでお待ちしています。</h2>
-    <a class="mori-button mori-button--primary" href="<%= data.mori.links.instagram %>" target="_blank" rel="noopener noreferrer">Instagramで最新情報を見る</a>
-  </div>
-</section>
+  <a class="lp-btn lp-btn--line" href="#">
+    <%- render('icon/MessageCircle', { iconClass: 'lp-btn__icon' }) %>
+    <%= data.seitai.fixedCta.ctaText %>
+  </a>
+</aside>
