@@ -43,13 +43,16 @@ Lighthouse満点や強いキャッシュ戦略を最優先する場合は、別�
 
 ## Demo
 
-このテンプレートで作成したサンプルLPとして、架空カフェ新店舗「Mori Coffee」のデモページを公開しています。
+このテンプレートで作成したサンプルLPとして、架空の整体サロン「呼吸を整える整体院」のデモページを公開しています。
 
-- Demo: [Mori Coffee LP](https://n-tong009.github.io/static-site-generator/)
-- 構成: Hero / Concept / Menu / Space / Access / CTA
+- Demo: [整体サロン LP](https://n-tong009.github.io/static-site-generator/)
+- 構成: Hero / お悩み / アプローチ / 院内の空間 / 初回お試し価格 / FAQ / CTA
 - 実装例:
   - frontmatterによるページメタ管理
-  - JSON dataによるメニュー・店舗情報管理
+  - JSON data（`seitai.json`）によるLPコンテンツ管理
+  - Lucideアイコンの手書きSVG component化
+  - ハンバーガーメニュー（Drawer）・スクロール演出（Reveal）のJSモジュール
+  - Google Fonts（Noto Sans JP / Zen Kaku Gothic New）連携
   - ページ固有SCSSによるLPデザイン
   - 非圧縮・ハッシュなしの納品向けビルド
   - GitHub Pagesへの静的公開
