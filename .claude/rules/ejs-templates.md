@@ -54,7 +54,7 @@ const _size  = typeof iconSize  !== 'undefined' ? iconSize  : 24
 title: 'ページタイトル'
 description: 'metaディスクリプション'
 ogImage: '/images/og.jpg'
-pageId: 'pageIdentifier'  # JS page router 連携。ファイル名と完全一致推奨（ハイフン → camelCase）
+pageId: 'pageIdentifier' # JS page router 連携。ファイル名と完全一致推奨（ハイフン → camelCase）
 ---
 ```
 

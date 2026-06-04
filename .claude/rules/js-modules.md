@@ -55,7 +55,9 @@ export default class Carousel {
     if (!this.el) return this
     const items = qsa('[data-item]', this.el)
     items.forEach((item) => {
-      const off = on(item, 'click', () => { /* ... */ })
+      const off = on(item, 'click', () => {
+        /* ... */
+      })
       this.offs.push(off)
     })
     return this

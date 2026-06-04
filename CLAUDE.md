@@ -47,3 +47,4 @@ dist/         # 納品物
 - `.claude/rules/ejs-templates.md` — EJSテンプレートルール
 - `.claude/rules/js-modules.md` — JSモジュール設計ルール
 - `.claude/rules/scss.md` — SCSS設計規約
+- `.claude/rules/permissions.md` — 権限ポリシー（層1 permission の要約・サプライチェーン防御）

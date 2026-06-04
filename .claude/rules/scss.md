@@ -29,12 +29,14 @@
 ## 変数化粒度
 
 変数化する:
+
 - ブランドカラー（`$COLOR_PRIMARY` 等）
 - フォントファミリー（`$FONT_FAMILY`）
 - ブレイクポイント（`$MIN_WIDTH` / `$MAX_WIDTH`）
 - z-index 体系（`$Z_HEADER` 等）
 
 変数化しない:
+
 - margin / padding 値
 - border-radius 値
 - animation duration（コンポーネント固有）
