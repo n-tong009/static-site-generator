@@ -4,9 +4,11 @@
 // layouts
 @use 'layouts/default';
 @use 'layouts/content';
+@use 'layouts/lp';
 
 // partials
 @use 'partials/Header';
+@use 'partials/LpHeader';
 @use 'partials/Footer';
 @use 'partials/Button';
 @use 'partials/HeroSection';

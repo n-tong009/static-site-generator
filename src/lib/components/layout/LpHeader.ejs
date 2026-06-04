@@ -1,0 +1,32 @@
+<%
+// LpHeader.ejs — LP専用 sticky ヘッダー + nav drawer
+const homeUrl = url('/')
+%>
+<header class="lp-site-header" id="lpHeader">
+  <a class="lp-brand" href="<%= homeUrl %>">
+    <%- render('icon/Leaf', { iconClass: 'lp-brand__leaf' }) %>
+    <span><%= SITE_CONFIG.name %></span>
+  </a>
+  <button class="lp-hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<div class="lp-scrim" id="scrim"></div>
+
+<nav class="lp-nav-drawer" id="drawer" aria-label="メインメニュー">
+  <button class="lp-nav-close" id="navClose" aria-label="メニューを閉じる">
+    <%- render('icon/X', { iconClass: 'lp-nav-close__icon' }) %>
+  </button>
+  <a href="#worries"><%- render('icon/HeartPulse', { iconClass: 'lp-drawer-nav__icon' }) %>こんなお悩み</a>
+  <a href="#approach"><%- render('icon/Sparkles', { iconClass: 'lp-drawer-nav__icon' }) %>当院のアプローチ</a>
+  <a href="#space"><%- render('icon/Image', { iconClass: 'lp-drawer-nav__icon' }) %>院内の空間</a>
+  <a href="#pricing"><%- render('icon/Tag', { iconClass: 'lp-drawer-nav__icon' }) %>初回お試し価格</a>
+  <a href="#faq"><%- render('icon/HelpCircle', { iconClass: 'lp-drawer-nav__icon' }) %>よくあるご質問</a>
+  <a class="lp-btn lp-btn--primary lp-drawer-cta" href="#">
+    <%- render('icon/CalendarCheck', { iconClass: 'lp-btn__icon' }) %>
+    今すぐ予約する（LINE予約）
+  </a>
+</nav>

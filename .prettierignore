@@ -14,5 +14,8 @@ pnpm-lock.yaml
 # 静的アセット
 /public/
 
+# EJSソース（prettier-plugin-ejs がJS式内のHTMLを誤整形するため除外）
+src/**/*.ejs
+
 # pnpm
 .pnpm-store

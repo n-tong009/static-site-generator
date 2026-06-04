@@ -3,7 +3,7 @@
 @use '../common/config' as *;
 
 button {
-  background-color: $COLOR_SECONDARY;
+  background-color: $COLOR_LP_PRIMARY_SOFT;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -13,13 +13,13 @@ button {
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: color.adjust($COLOR_SECONDARY, $lightness: -10%);
+    background-color: color.adjust($COLOR_LP_PRIMARY_SOFT, $lightness: -10%);
   }
 }
 
 .btn-primary {
   display: inline-block;
-  background-color: $COLOR_SECONDARY;
+  background-color: $COLOR_LP_PRIMARY_SOFT;
   color: white;
   text-decoration: none;
   padding: 0.75rem 2rem;
@@ -28,7 +28,7 @@ button {
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: color.adjust($COLOR_SECONDARY, $lightness: -10%);
+    background-color: color.adjust($COLOR_LP_PRIMARY_SOFT, $lightness: -10%);
     color: white;
   }
 }

@@ -70,7 +70,7 @@ function renderPreloadLink(item) {
   <% if (!isDev) { %>
   <meta
     http-equiv="Content-Security-Policy"
-    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.googletagmanager.com; font-src 'self' data:"
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.googletagmanager.com; font-src 'self' data: https://fonts.gstatic.com"
   />
   <% } %>
   <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -98,6 +98,11 @@ function renderPreloadLink(item) {
   <link rel="icon" href="<%= PATHS.images.favicon %>.png" type="image/png" sizes="192x192" />
   <link rel="icon" href="<%= PATHS.images.favicon %>.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="<%= PATHS.images.appleTouchIcon %>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="<%= WEBFONTS.preconnect[0] %>" />
+  <link rel="preconnect" href="<%= WEBFONTS.preconnect[1] %>" crossorigin />
+  <link rel="stylesheet" href="<%= WEBFONTS.href %>" />
 
   <!-- preconnect / preload (frontmatter から) -->
   <% for (const href of preconnect) { %>

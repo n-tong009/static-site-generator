@@ -195,3 +195,13 @@ export const FORM_CONFIG = {
  * @returns {string}
  */
 export const getCurrentContactFormUrl = () => FORM_CONFIG.endpoint[getCurrentEnv()] || ''
+
+/**
+ * Google Fonts 設定。Head.ejs が preconnect + stylesheet link 出力に使用。
+ * ベタ書き禁止規約に準拠し URL を一元管理。
+ * @type {{ preconnect: string[]; href: string }}
+ */
+export const WEBFONTS = {
+  preconnect: ['https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
+  href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap'
+}

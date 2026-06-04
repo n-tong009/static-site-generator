@@ -1,0 +1,32 @@
+<%
+// LpLayout.ejs — 整体院LP専用レイアウト（中央シート + drawer ヘッダー + 固定LINEバー）
+const locals = frontMatter
+locals.pagePath = pagePath
+locals.pageId = pageId
+%>
+<!DOCTYPE html>
+<html lang="<%= SITE_CONFIG.defaultLocale %>">
+  <%- include('./Head.ejs', { locals }) %>
+  <body data-page="<%= pageId %>">
+    <%- include('./Analytics.ejs', { position: 'body' }) %>
+    <div class="sheet">
+      <%- include('./LpHeader.ejs', { locals }) %>
+      <main id="top">
+        <%- content %>
+      </main>
+    </div>
+
+    <div class="lp-line-bar" aria-label="LINE予約">
+      <div class="lp-line-bar__inner">
+        <div class="lp-line-bar__info">
+          <span class="lp-line-bar__chip">LINE</span>
+          <span>LINEでかんたん予約（24時間受付中）</span>
+        </div>
+        <a class="lp-btn lp-btn--primary lp-btn--sm" href="#">
+          予約する
+          <%- render('icon/ChevronRight', { iconClass: 'lp-btn__icon' }) %>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
