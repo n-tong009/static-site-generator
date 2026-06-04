@@ -2,10 +2,10 @@
 name: Deploy GitHub Pages
 
 on:
-  # gh-pages ブランチに push されたときに自動実行する
+  # sample_page ブランチに push されたときに自動実行する
   push:
     branches:
-      - gh-pages
+      - sample_page
 
   # GitHub Actions の画面から手動実行できるようにする
   workflow_dispatch:
